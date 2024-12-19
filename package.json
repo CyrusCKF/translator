@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/roboto": "^5.1.0",
+    "@mui/material": "^6.2.1",
     "@testing-library/react": "^16.1.0",
     "cra-template": "1.2.0",
     "ollama": "^0.5.11",
