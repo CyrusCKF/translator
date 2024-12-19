@@ -10,6 +10,8 @@
     "@mantine/hooks": "^7.15.1",
     "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
+    "@tabler/icons": "^3.26.0",
+    "@tabler/icons-react": "^3.26.0",
     "@testing-library/react": "^16.1.0",
     "cra-template": "1.2.0",
     "ollama": "^0.5.11",
