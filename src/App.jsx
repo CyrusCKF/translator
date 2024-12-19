@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "@mantine/core/styles.css";
 import {
   createTheme,
@@ -10,16 +10,24 @@ import {
 import { IconPhone } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
+import { getAllModels } from "./Agent";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
 });
 
 function App() {
-  console.log(classes);
+  useEffect(() => {
+    async function getModels() {
+      const response = await getAllModels();
+      console.log(response);
+    }
+    getModels();
+  });
+
   return (
-    <MantineProvider theme={theme}>
-      <AppShell navbar={{ width: 100 }} padding="md">
+    <MantineProvider theme={theme} forceColorScheme="dark">
+      <AppShell navbar={{ width: "100px" }} padding="md">
         <AppShell.Navbar
           style={{ display: "flex", alignItems: "center" }}
           p="md"
