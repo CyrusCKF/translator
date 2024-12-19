@@ -6,6 +6,9 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.0",
+    "@mantine/core": "^7.15.1",
+    "@mantine/hooks": "^7.15.1",
+    "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
     "@testing-library/react": "^16.1.0",
     "cra-template": "1.2.0",
@@ -43,6 +46,9 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.13.0",
+    "postcss": "^8.4.49",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript-eslint": "^8.18.1",
     "web-vitals": "^4.2.4"
   }

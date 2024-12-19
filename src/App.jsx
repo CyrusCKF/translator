@@ -1,12 +1,14 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import "@mantine/core/styles.css";
+import { createTheme, MantineProvider } from "@mantine/core";
+
+const theme = createTheme({
+  fontFamily: "Montserrat, sans-serif",
+  defaultRadius: 'md',
+});
 
 function App() {
-  return (
-    <div>
-      <Typography variant="h1">Hello, world</Typography>
-    </div>
-  );
+  return <MantineProvider theme={theme}>Hello</MantineProvider>;
 }
 
 export default App;
