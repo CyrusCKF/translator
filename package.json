@@ -5,6 +5,7 @@
   "dependencies": {
     "@testing-library/react": "^16.1.0",
     "cra-template": "1.2.0",
+    "ollama": "^0.5.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1"

@@ -1,5 +1,6 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ollama from "ollama/browser";
 
 function Square({ value, onSquareClick }) {
   return (
@@ -56,6 +57,22 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 == 0;
   const currentSquares = history[currentMove];
+
+  useEffect(() => {
+    async function chat() {
+      console.log("Start chatting");
+      try {
+        const response = await ollama.chat({
+          model: "llama3.2",
+          messages: [{ role: "user", content: "Why is the sky blue?" }],
+        });
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching chat response:", error);
+      }
+    }
+    chat();
+  }, []);
 
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
