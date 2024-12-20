@@ -9,3 +9,24 @@
   border-top-right-radius: 0;
   border-top-width: 0.1px;
 }
+
+.vertical-divider {
+  width: 1px;
+  height: 100%;
+  border-left-width: 1px;
+  border-right-width: 0;
+  border-color: var(--mantine-color-default-border);
+  border-style: solid;
+}
+
+.bottom-right-actions {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  margin: var(--mantine-spacing-xs);
+}
+
+.action-icon {
+  width: 70%;
+  height: 70%;
+}

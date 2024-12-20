@@ -30,11 +30,12 @@ function App() {
 
   return (
     <MantineProvider theme={theme} forceColorScheme="dark">
-      <AppShell navbar={{ width: "100px" }} padding="md">
-        <AppShell.Navbar
-          style={{ display: "flex", alignItems: "center" }}
-          p="md"
-        >
+      <AppShell
+        classNames={{ navbar: classes.navbar }}
+        navbar={{ width: "100px" }}
+        padding="md"
+      >
+        <AppShell.Navbar>
           <Text>Navbar</Text>
           <Tooltip label="Project" position="right">
             <ActionIcon className={classes["action-icon"]} variant="filled">
