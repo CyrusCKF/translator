@@ -18,6 +18,7 @@ import {
 
 import classes from "./Paragraph.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
+import useParagraphStore from "./ParagraphStore";
 
 export default function Paragraph() {
   return (
@@ -30,7 +31,11 @@ export default function Paragraph() {
           <Stack>
             <Group justify="space-between">
               <Text>Model</Text>
-              <Select data={["llama3:latest"]}></Select>
+              <Select
+                data={["llama3:latest"]}
+                value={useParagraphStore((state) => state.model)}
+                onChange={useParagraphStore((state) => state.setModel)}
+              ></Select>
             </Group>
             <Group justify="space-between">
               <Text pr="md">Languages</Text>
@@ -39,12 +44,16 @@ export default function Paragraph() {
                   data={["English", "Spanish"]}
                   w="7rem"
                   searchable
+                  value={useParagraphStore((state) => state.fromLanguage)}
+                  onChange={useParagraphStore((state) => state.setFromLanguage)}
                 ></Select>
                 <Text>to</Text>
                 <Select
                   data={["English", "Spanish"]}
                   w="7rem"
                   searchable
+                  value={useParagraphStore((state) => state.toLanguage)}
+                  onChange={useParagraphStore((state) => state.setToLanguage)}
                 ></Select>
               </Group>
             </Group>
@@ -55,6 +64,8 @@ export default function Paragraph() {
                 autosize
                 minRows={4}
                 maxRows={8}
+                value={useParagraphStore((state) => state.context)}
+                onChange={useParagraphStore((state) => state.setContext)}
               ></Textarea>
             </Stack>
             <Stack>
@@ -107,12 +118,18 @@ export default function Paragraph() {
                 </Tooltip>
               </Group>
             </Box>
-            <Button loading={true} mt="lg" mb="lg">
+            <Button
+              className={classes["translate-button"]}
+              loading={useParagraphStore((state) => state.isTranslating)}
+              onClick={useParagraphStore((state) => state.startTranslation)}
+            >
               Translate
             </Button>
             <Box pos="relative">
               <LoadingOverlay
-                visible={true}
+                visible={useParagraphStore(
+                  (state) => state.isTranslating && state.translatedText === ""
+                )}
                 overlayProps={{ radius: "sm", blur: 2 }}
                 loaderProps={{ type: "dots" }}
               />
@@ -122,6 +139,7 @@ export default function Paragraph() {
                 disabled
                 autosize
                 minRows={10}
+                value={useParagraphStore((state) => state.translatedText)}
               ></Textarea>
               <Box className={classes["bottom-right-actions"]}>
                 <Tooltip label="Copy to clipboard">

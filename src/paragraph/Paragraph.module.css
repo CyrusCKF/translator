@@ -30,3 +30,8 @@
   width: 70%;
   height: 70%;
 }
+
+.translate-button {
+  margin-top: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-lg);
+}
