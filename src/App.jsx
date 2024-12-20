@@ -6,14 +6,17 @@ import {
   AppShell,
   Tooltip,
   ActionIcon,
+  Text,
 } from "@mantine/core";
 import { IconPhone } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
 import { getAllModels } from "./Agent";
+import Paragraph from "./paragraph/Paragraph";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
+  primaryColor: "green",
 });
 
 function App() {
@@ -32,14 +35,16 @@ function App() {
           style={{ display: "flex", alignItems: "center" }}
           p="md"
         >
-          Navbar
+          <Text>Navbar</Text>
           <Tooltip label="Project" position="right">
             <ActionIcon className={classes["action-icon"]} variant="filled">
               <IconPhone className={classes["nav-icon"]} />
             </ActionIcon>
           </Tooltip>
         </AppShell.Navbar>
-        <AppShell.Main>Main</AppShell.Main>
+        <AppShell.Main>
+          <Paragraph></Paragraph>
+        </AppShell.Main>
       </AppShell>
     </MantineProvider>
   );

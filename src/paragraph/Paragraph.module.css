@@ -1,0 +1,11 @@
+.input-top {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-width: 0.1px;
+}
+
+.input-bottom {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-width: 0.1px;
+}
