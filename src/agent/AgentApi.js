@@ -10,3 +10,10 @@ export async function getAllModels() {
     }
   );
 }
+
+export async function translate() {
+  await delay(5000);
+  return "Translation TODO";
+}
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

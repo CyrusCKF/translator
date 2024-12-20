@@ -11,7 +11,7 @@ import {
 import { IconPhone } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
-import { getAllModels } from "./Agent";
+import { getAllModels } from "./agent/AgentApi";
 import Paragraph from "./paragraph/Paragraph";
 
 const theme = createTheme({
