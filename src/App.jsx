@@ -17,6 +17,7 @@ import Paragraph from "./paragraph/Paragraph";
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
   primaryColor: "green",
+  scale: 1.5,
 });
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
       <AppShell
         classNames={{ navbar: classes.navbar }}
         navbar={{ width: "100px" }}
-        padding="md"
+        padding="xl"
       >
         <AppShell.Navbar>
           <Text>Navbar</Text>

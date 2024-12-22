@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "@mantine/core/styles.css";
 import {
   Text,
@@ -19,8 +19,17 @@ import {
 import classes from "./Paragraph.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
 import useParagraphStore from "./ParagraphStore";
+import { getAllModels } from "../agent/AgentApi";
 
 export default function Paragraph() {
+  useEffect(() => {
+    async function getModels() {
+      const models = await getAllModels();
+      useParagraphStore.setState({ availableModels: models });
+    }
+    getModels();
+  }, []);
+
   return (
     <Stack>
       <Text size="xl" fw={700}>
@@ -32,7 +41,7 @@ export default function Paragraph() {
             <Group justify="space-between">
               <Text>Model</Text>
               <Select
-                data={["llama3:latest"]}
+                data={useParagraphStore((state) => state.availableModels)}
                 value={useParagraphStore((state) => state.model)}
                 onChange={useParagraphStore((state) => state.setModel)}
               ></Select>
