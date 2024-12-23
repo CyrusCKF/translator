@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { getAllModels, translate } from "../agent/AgentApi";
+import {
+  calculateSimilarity,
+  getAllModels,
+  translate,
+} from "../agent/AgentApi";
 
 const useParagraphStore = create((set, get) => ({
   availableModels: [],
@@ -11,6 +15,7 @@ const useParagraphStore = create((set, get) => ({
   originalText: "",
   translatedText: "",
   isTranslating: false,
+  confidenceScore: null,
 
   setModel: (model) => set({ model: model }),
   setFromLanguage: (fromLanguage) => set({ fromLanguage: fromLanguage }),
@@ -23,16 +28,27 @@ const useParagraphStore = create((set, get) => ({
     set({ availableModels: models });
   },
   startTranslation: async () => {
-    set({ translatedText: "", isTranslating: true });
-    const translateResponse = translate({
+    set({ translatedText: "", isTranslating: true, confidenceScore: null });
+    const params = {
       model: get().model,
       text: get().originalText,
+      from: get().fromLanguage,
       to: get().toLanguage,
-    });
+    };
+    const translateResponse = translate(params);
     for await (const res of translateResponse) {
       set({ translatedText: get().translatedText + res });
     }
     set({ isTranslating: false });
+
+    const similarity = await calculateSimilarity({
+      text1: params.text,
+      text2: get().translatedText,
+      language1: params.from,
+      language2: params.to,
+      model: params.model,
+    });
+    set({ confidenceScore: similarity });
   },
 }));
 

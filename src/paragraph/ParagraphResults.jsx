@@ -28,6 +28,7 @@ export default function ParagraphResults() {
       isTranslating: state.isTranslating,
       startTranslation: state.startTranslation,
       translatedText: state.translatedText,
+      confidenceScore: state.confidenceScore,
     }))
   );
 
@@ -89,6 +90,13 @@ export default function ParagraphResults() {
           minRows={10}
           value={store.translatedText}
         ></Textarea>
+        <Box className={classes["bottom-left"]}>
+          {store.confidenceScore != null && (
+            <Text c="dimmed" size="sm">
+              Confidence: {store.confidenceScore.toFixed(2)}
+            </Text>
+          )}
+        </Box>
         <Box className={classes["bottom-right-actions"]}>
           <AnnotatedIconButton
             tooltip="Copy to clipboard"

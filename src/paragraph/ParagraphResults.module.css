@@ -5,6 +5,13 @@
   margin: var(--mantine-spacing-xs);
 }
 
+.bottom-left {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  margin: var(--mantine-spacing-xs);
+}
+
 .action-icon {
   width: 70%;
   height: 70%;
