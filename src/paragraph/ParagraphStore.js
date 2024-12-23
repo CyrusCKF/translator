@@ -49,11 +49,17 @@ const useParagraphStore = create((set, get) => ({
   },
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
+    let examplesClone = JSON.parse(JSON.stringify(get().examples));
+    examplesClone = examplesClone.filter(
+      ([text1, text2]) => text1 != "" && text2 != ""
+    );
     const params = {
       model: get().model,
       text: get().originalText,
       from: get().fromLanguage,
       to: get().toLanguage,
+      context: get().context,
+      examples: examplesClone,
     };
     const translateResponse = translate(params);
     for await (const res of translateResponse) {

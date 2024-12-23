@@ -12,9 +12,27 @@ export async function getAllModels() {
   );
 }
 
-export async function* translate({ text, model, from, to } = {}) {
+export async function* translate({
+  text,
+  model,
+  from,
+  to,
+  context = "",
+  examples = [],
+} = {}) {
   await delay(1000);
-  const prompt = `Translate the following text from ${from} to ${to}. Reply only the translated text.\n\n${text}`;
+
+  let prompt = "";
+  if (context != "") prompt += `Context: ${context}\n\n`;
+  if (examples.length > 0) {
+    prompt += `Examples:\n`;
+    for (const [text1, text2] of examples) {
+      prompt += `[${from}]${text1}\n[${to}]${text2}\n\n`;
+    }
+  }
+  prompt += `Translate the following text from ${from} to ${to}. Reply only the translated text.\n\n${text}`;
+  console.log(`[Prompt]\n${prompt}`);
+
   const generateResponse = await Ollama.generate({
     model: model,
     prompt: prompt,
