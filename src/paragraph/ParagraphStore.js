@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getAllModels, translate } from "../agent/AgentApi";
 
-const useParagraphStore = create((set) => ({
+const useParagraphStore = create((set, get) => ({
   availableModels: [],
   model: "",
   allLanguages: [],
@@ -15,7 +15,7 @@ const useParagraphStore = create((set) => ({
   setModel: (model) => set({ model: model }),
   setFromLanguage: (fromLanguage) => set({ fromLanguage: fromLanguage }),
   setToLanguage: (toLanguage) => set({ toLanguage: toLanguage }),
-  setContext: (event) => set({ context: event.currentTarget.value }),
+  setContext: (context) => set({ context: context }),
   setOriginalText: (event) => set({ originalText: event.currentTarget.value }),
 
   getModels: async () => {
@@ -24,8 +24,15 @@ const useParagraphStore = create((set) => ({
   },
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true });
-    const translatedText = await translate();
-    set({ translatedText: translatedText, isTranslating: false });
+    const translateResponse = translate({
+      model: get().model,
+      text: get().originalText,
+      to: get().toLanguage,
+    });
+    for await (const res of translateResponse) {
+      set({ translatedText: get().translatedText + res });
+    }
+    set({ isTranslating: false });
   },
 }));
 

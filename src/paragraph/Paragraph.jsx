@@ -20,6 +20,7 @@ import classes from "./Paragraph.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
 import useParagraphStore from "./ParagraphStore";
 import { getAllModels } from "../agent/AgentApi";
+import { useShallow } from "zustand/shallow";
 
 export default function Paragraph() {
   useEffect(() => {
@@ -29,6 +30,22 @@ export default function Paragraph() {
     }
     getModels();
   }, []);
+
+  const [model, fromLanguage, toLanguage, originalText] = useParagraphStore(
+    useShallow((state) => [
+      state.model,
+      state.fromLanguage,
+      state.toLanguage,
+      state.originalText,
+    ])
+  );
+  const canTranslate =
+    model !== "" &&
+    fromLanguage !== "" &&
+    toLanguage !== "" &&
+    originalText !== "";
+
+  const setContext = useParagraphStore().setContext;
 
   return (
     <Stack>
@@ -74,7 +91,7 @@ export default function Paragraph() {
                 minRows={4}
                 maxRows={8}
                 value={useParagraphStore((state) => state.context)}
-                onChange={useParagraphStore((state) => state.setContext)}
+                onChange={(e) => setContext(e.currentTarget.value)}
               ></Textarea>
             </Stack>
             <Stack>
@@ -109,6 +126,7 @@ export default function Paragraph() {
                 placeholder="Original text"
                 autosize
                 minRows={10}
+                onChange={useParagraphStore((state) => state.setOriginalText)}
               ></Textarea>
               <Group gap="xs" className={classes["bottom-right-actions"]}>
                 <Tooltip label="Paste from clipboard">
@@ -131,6 +149,7 @@ export default function Paragraph() {
               className={classes["translate-button"]}
               loading={useParagraphStore((state) => state.isTranslating)}
               onClick={useParagraphStore((state) => state.startTranslation)}
+              disabled={!canTranslate}
             >
               Translate
             </Button>
