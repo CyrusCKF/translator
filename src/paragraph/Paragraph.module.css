@@ -32,6 +32,7 @@
 }
 
 .translate-button {
+  width: 100%;
   margin-top: var(--mantine-spacing-lg);
   margin-bottom: var(--mantine-spacing-lg);
 }

@@ -16,7 +16,7 @@ const useParagraphStore = create((set, get) => ({
   setFromLanguage: (fromLanguage) => set({ fromLanguage: fromLanguage }),
   setToLanguage: (toLanguage) => set({ toLanguage: toLanguage }),
   setContext: (context) => set({ context: context }),
-  setOriginalText: (event) => set({ originalText: event.currentTarget.value }),
+  setOriginalText: (text) => set({ originalText: text }),
 
   getModels: async () => {
     const models = await getAllModels();
