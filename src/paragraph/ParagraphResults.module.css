@@ -1,0 +1,17 @@
+.bottom-right-actions {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  margin: var(--mantine-spacing-xs);
+}
+
+.action-icon {
+  width: 70%;
+  height: 70%;
+}
+
+.translate-button {
+  width: 100%;
+  margin-top: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-lg);
+}

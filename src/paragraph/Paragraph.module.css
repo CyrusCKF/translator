@@ -1,15 +1,3 @@
-.input-top {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-width: 0.1px;
-}
-
-.input-bottom {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-top-width: 0.1px;
-}
-
 .vertical-divider {
   width: 1px;
   height: 100%;
@@ -17,22 +5,4 @@
   border-right-width: 0;
   border-color: var(--mantine-color-default-border);
   border-style: solid;
-}
-
-.bottom-right-actions {
-  position: absolute;
-  bottom: 0%;
-  right: 0%;
-  margin: var(--mantine-spacing-xs);
-}
-
-.action-icon {
-  width: 70%;
-  height: 70%;
-}
-
-.translate-button {
-  width: 100%;
-  margin-top: var(--mantine-spacing-lg);
-  margin-bottom: var(--mantine-spacing-lg);
 }
