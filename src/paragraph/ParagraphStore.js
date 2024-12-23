@@ -12,6 +12,7 @@ const useParagraphStore = create((set, get) => ({
   fromLanguage: "",
   toLanguage: "",
   context: "",
+  examples: [["", ""]],
   originalText: "",
   translatedText: "",
   isTranslating: false,
@@ -21,6 +22,25 @@ const useParagraphStore = create((set, get) => ({
   setFromLanguage: (fromLanguage) => set({ fromLanguage: fromLanguage }),
   setToLanguage: (toLanguage) => set({ toLanguage: toLanguage }),
   setContext: (context) => set({ context: context }),
+  removeExampleAt: (index) =>
+    set((state) => {
+      const examples = [...state.examples];
+      examples.splice(index, 1);
+      return { examples: examples };
+    }),
+  addExample: () =>
+    set((state) => {
+      const examples = [...state.examples];
+      examples.push(["", ""]);
+      return { examples: examples };
+    }),
+  modifyExampleAt: (index, new1 = null, new2 = null) =>
+    set((state) => {
+      const examples = JSON.parse(JSON.stringify(state.examples));
+      if (new1 != null) examples[index][0] = new1;
+      if (new2 != null) examples[index][1] = new2;
+      return { examples: examples };
+    }),
   setOriginalText: (text) => set({ originalText: text }),
 
   getModels: async () => {
