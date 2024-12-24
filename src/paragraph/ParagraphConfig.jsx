@@ -49,14 +49,14 @@ export default function ParagraphConfig() {
         <Text pr="md">Languages</Text>
         <Group>
           <Select
-            data={["English", "Spanish"]}
+            data={["English", "Spanish", "Chinese"]}
             w="7rem"
             searchable
             onChange={store.setFromLanguage}
           ></Select>
           <Text>to</Text>
           <Select
-            data={["English", "Spanish"]}
+            data={["English", "Spanish", "Chinese"]}
             w="7rem"
             searchable
             onChange={store.setToLanguage}
