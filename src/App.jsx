@@ -10,7 +10,7 @@ import {
   Space,
   Stack,
 } from "@mantine/core";
-import { IconHelp, IconLanguageHiragana, IconPhone } from "@tabler/icons-react";
+import { IconHelp, IconLanguageHiragana } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
 import { getAllModels } from "./agent/AgentApi";
@@ -22,6 +22,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import Help from "./help/Help";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
@@ -60,7 +61,7 @@ export default function App() {
           <AppShell.Main>
             <Routes>
               <Route path="/" element={<Paragraph />}></Route>
-              <Route path="/help" element={<Text>help</Text>}></Route>
+              <Route path="/help" element={<Help />}></Route>
               <Route path="*" element={<Text>Page not found</Text>}></Route>
             </Routes>
           </AppShell.Main>
