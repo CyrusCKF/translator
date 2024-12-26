@@ -47,7 +47,7 @@ export default function App() {
           navbar={{ width: "70px" }}
           padding="xl"
         >
-          <AppShell.Navbar>
+          {/* <AppShell.Navbar>
             <Space h="md"></Space>
             <Stack>
               <NavIcon to="/" tooltip="Translation">
@@ -57,7 +57,7 @@ export default function App() {
                 <IconHelp className={classes["nav-icon"]} />
               </NavIcon>
             </Stack>
-          </AppShell.Navbar>
+          </AppShell.Navbar> */}
           <AppShell.Main>
             <Routes>
               <Route path="/" element={<Paragraph />}></Route>

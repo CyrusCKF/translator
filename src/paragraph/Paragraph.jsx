@@ -9,9 +9,7 @@ import ParagraphConfig from "./ParagraphConfig";
 export default function Paragraph() {
   return (
     <Stack>
-      <Text size="xl" fw={700}>
-        PARAGRAPH
-      </Text>
+      <Text size="xl" fw={700}>Translation</Text>
       <Grid align="stretch">
         <Grid.Col span={4}>
           <Stack>

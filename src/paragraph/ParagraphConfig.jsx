@@ -19,6 +19,7 @@ import classes from "./ParagraphConfig.module.css";
 import useParagraphStore from "./ParagraphStore";
 import { useShallow } from "zustand/shallow";
 import { IconLayoutGridAdd, IconQuestionMark, IconTrashX } from "@tabler/icons-react";
+import LANGUAGES from "../shared/Languages";
 
 export default function ParagraphConfig() {
   const store = useParagraphStore(
@@ -47,21 +48,22 @@ export default function ParagraphConfig() {
   return (
     <>
       <Group justify="space-between">
-        <Text>Model</Text>
+        <Text>Model<Text c="red" span inherit>*</Text></Text>
+
         <Select data={store.availableModels} onChange={store.setModel}></Select>
       </Group>
       <Group justify="space-between">
-        <Text pr="md">Languages</Text>
+        <Text pr="md">Languages<Text c="red" span inherit>*</Text></Text>
         <Group>
           <Select
-            data={["English", "Spanish", "Chinese"]}
+            data={LANGUAGES}
             w="7rem"
             searchable
             onChange={store.setFromLanguage}
           ></Select>
           <Text>to</Text>
           <Select
-            data={["English", "Spanish", "Chinese"]}
+            data={LANGUAGES}
             w="7rem"
             searchable
             onChange={store.setToLanguage}
