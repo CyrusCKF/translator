@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// eslint-disable react-hooks/exhaustive-deps
 import React, { useEffect } from "react";
 import "@mantine/core/styles.css";
 import {

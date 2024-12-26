@@ -51,13 +51,13 @@ const useParagraphStore = create((set, get) => ({
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
     let examplesClone = JSON.parse(JSON.stringify(get().examples));
     examplesClone = examplesClone.filter(
-      ([text1, text2]) => text1 != "" && text2 != ""
+      ([text1, text2]) => text1 !== "" && text2 !== ""
     );
     const params = {
       model: get().model,
       text: get().originalText,
-      from: get().fromLanguage,
-      to: get().toLanguage,
+      sourceLang: get().fromLanguage,
+      targetLang: get().toLanguage,
       context: get().context,
       examples: examplesClone,
     };
@@ -70,8 +70,8 @@ const useParagraphStore = create((set, get) => ({
     const similarity = await calculateSimilarity({
       text1: params.text,
       text2: get().translatedText,
-      language1: params.from,
-      language2: params.to,
+      language1: params.sourceLang,
+      language2: params.targetLang,
       model: params.model,
     });
     set({ confidenceScore: similarity });

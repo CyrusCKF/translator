@@ -1,4 +1,5 @@
 import Ollama from "ollama/browser";
+import { estimatePrompt, refinePrompt, translatePrompt } from "./Prompts.js";
 
 export async function getAllModels() {
   await delay(1000);
@@ -15,30 +16,42 @@ export async function getAllModels() {
 export async function* translate({
   text,
   model,
-  from,
-  to,
+  sourceLang,
+  targetLang,
   context = "",
   examples = [],
+  withRefinement = true,
 } = {}) {
   await delay(1000);
-
-  let prompt = "";
-  if (context != "") prompt += `Context: ${context}\n\n`;
-  if (examples.length > 0) {
-    prompt += `Examples:\n`;
-    for (const [text1, text2] of examples) {
-      prompt += `[${from}]${text1}\n[${to}]${text2}\n\n`;
-    }
-  }
-  prompt += `Translate the following text from ${from} to ${to}. Reply only the translated text.\n\n${text}`;
-  console.log(`[Prompt]\n${prompt}`);
-
-  const generateResponse = await Ollama.generate({
+  const transPrompt = translatePrompt(text, sourceLang, targetLang, context, examples);
+  const translateResponse = await Ollama.generate({
     model: model,
-    prompt: prompt,
+    prompt: transPrompt,
     stream: true,
   });
-  for await (const res of generateResponse) {
+  let rawTranslation = ""
+  for await (const res of translateResponse) {
+    if (res.response == null) continue
+    if (withRefinement) rawTranslation += res.response
+    else yield res.response;
+  }
+  if (!withRefinement) return;
+
+  const estimPrompt = estimatePrompt(text, rawTranslation, sourceLang, targetLang)
+  const estimResponse = await Ollama.generate({
+    model: model,
+    prompt: estimPrompt,
+  });
+  const mqmAnnotations = estimResponse.response
+
+  const refPrompt = refinePrompt(text, rawTranslation, sourceLang, targetLang, mqmAnnotations, context, examples)
+  const refResponse = await Ollama.generate({
+    model: model,
+    prompt: refPrompt,
+    stream: true,
+  });
+
+  for await (const res of refResponse) {
     if (res.response != null) yield res.response;
   }
 }
@@ -53,8 +66,9 @@ export async function calculateSimilarity({
   const backResponse = translate({
     text: text2,
     model: model,
-    from: language2,
-    to: language1,
+    sourceLang: language2,
+    targetLang: language1,
+    withRefinement: false,
   });
   let text3 = "";
   for await (const res of backResponse) text3 += res;
