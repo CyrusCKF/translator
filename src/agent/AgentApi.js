@@ -20,7 +20,7 @@ export async function* translate({
   targetLang,
   context = "",
   examples = [],
-  withRefinement = true,
+  withRefinement = false,
 } = {}) {
   await delay(1000);
   const transPrompt = translatePrompt(text, sourceLang, targetLang, context, examples);

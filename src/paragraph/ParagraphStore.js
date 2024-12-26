@@ -11,6 +11,7 @@ const useParagraphStore = create((set, get) => ({
   allLanguages: [],
   fromLanguage: "",
   toLanguage: "",
+  useRefinement: false,
   context: "",
   examples: [["", ""]],
   originalText: "",
@@ -21,6 +22,7 @@ const useParagraphStore = create((set, get) => ({
   setModel: (model) => set({ model: model }),
   setFromLanguage: (fromLanguage) => set({ fromLanguage: fromLanguage }),
   setToLanguage: (toLanguage) => set({ toLanguage: toLanguage }),
+  setUseRefinement: (useRefinement) => set({ useRefinement: useRefinement }),
   setContext: (context) => set({ context: context }),
   removeExampleAt: (index) =>
     set((state) => {
@@ -58,6 +60,7 @@ const useParagraphStore = create((set, get) => ({
       text: get().originalText,
       sourceLang: get().fromLanguage,
       targetLang: get().toLanguage,
+      withRefinement: get().useRefinement,
       context: get().context,
       examples: examplesClone,
     };

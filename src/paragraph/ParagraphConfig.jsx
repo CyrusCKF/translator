@@ -11,12 +11,14 @@ import {
   Select,
   Box,
   ActionIcon,
+  Switch,
+  HoverCard,
 } from "@mantine/core";
 
 import classes from "./ParagraphConfig.module.css";
 import useParagraphStore from "./ParagraphStore";
 import { useShallow } from "zustand/shallow";
-import { IconLayoutGridAdd, IconTrashX } from "@tabler/icons-react";
+import { IconLayoutGridAdd, IconQuestionMark, IconTrashX } from "@tabler/icons-react";
 
 export default function ParagraphConfig() {
   const store = useParagraphStore(
@@ -25,10 +27,12 @@ export default function ParagraphConfig() {
       availableModels: state.availableModels,
       fromLanguage: state.fromLanguage,
       toLanguage: state.toLanguage,
+      useRefinement: state.useRefinement,
       examples: state.examples,
       setModel: state.setModel,
       setFromLanguage: state.setFromLanguage,
       setToLanguage: state.setToLanguage,
+      setUseRefinement: state.setUseRefinement,
       setContext: state.setContext,
       addExample: state.addExample,
       removeExampleAt: state.removeExampleAt,
@@ -63,6 +67,25 @@ export default function ParagraphConfig() {
             onChange={store.setToLanguage}
           ></Select>
         </Group>
+      </Group>
+      <Group justify="space-between">
+        <Group>
+          <Text>Refine results</Text>
+          <HoverCard width={280} shadow="md">
+            <HoverCard.Target>
+              <IconQuestionMark>Hover to reveal the card</IconQuestionMark>
+            </HoverCard.Target>
+            <HoverCard.Dropdown>
+              <Text size="sm">
+                Automatically edit the raw translation results. Results are better but it uses about 3x time.
+              </Text>
+            </HoverCard.Dropdown>
+          </HoverCard>
+        </Group>
+        <Switch
+          checked={store.useRefinement}
+          onChange={(event) => store.setUseRefinement(event.currentTarget.checked)}
+        />
       </Group>
       <Stack>
         <Text>Context</Text>
