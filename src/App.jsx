@@ -17,6 +17,7 @@ import { getAllModels } from "./agent/AgentApi";
 import Paragraph from "./paragraph/Paragraph";
 import {
   BrowserRouter,
+  HashRouter,
   NavLink,
   Route,
   Routes,
@@ -40,7 +41,7 @@ export default function App() {
   });
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
@@ -60,14 +61,14 @@ export default function App() {
           </AppShell.Navbar> */}
           <AppShell.Main>
             <Routes>
-              <Route path="/" element={<Paragraph />}></Route>
+              <Route path="/translator" element={<Paragraph />}></Route>
               <Route path="/help" element={<Help />}></Route>
               <Route path="*" element={<Text>Page not found</Text>}></Route>
             </Routes>
           </AppShell.Main>
         </AppShell>
       </MantineProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -18,7 +18,11 @@ import {
 import classes from "./ParagraphConfig.module.css";
 import useParagraphStore from "./ParagraphStore";
 import { useShallow } from "zustand/shallow";
-import { IconLayoutGridAdd, IconQuestionMark, IconTrashX } from "@tabler/icons-react";
+import {
+  IconLayoutGridAdd,
+  IconQuestionMark,
+  IconTrashX,
+} from "@tabler/icons-react";
 import LANGUAGES from "../shared/Languages";
 
 export default function ParagraphConfig() {
@@ -48,12 +52,22 @@ export default function ParagraphConfig() {
   return (
     <>
       <Group justify="space-between">
-        <Text>Model<Text c="red" span inherit>*</Text></Text>
+        <Text>
+          Model
+          <Text c="red" span inherit>
+            *
+          </Text>
+        </Text>
 
         <Select data={store.availableModels} onChange={store.setModel}></Select>
       </Group>
       <Group justify="space-between">
-        <Text pr="md">Languages<Text c="red" span inherit>*</Text></Text>
+        <Text pr="md">
+          Languages
+          <Text c="red" span inherit>
+            *
+          </Text>
+        </Text>
         <Group>
           <Select
             data={LANGUAGES}
@@ -79,14 +93,17 @@ export default function ParagraphConfig() {
             </HoverCard.Target>
             <HoverCard.Dropdown>
               <Text size="sm">
-                Automatically edit the raw translation results. Results are better but it uses about 3x time.
+                Analyze and edit the raw translation results. Uses
+                about 3x time.
               </Text>
             </HoverCard.Dropdown>
           </HoverCard>
         </Group>
         <Switch
           checked={store.useRefinement}
-          onChange={(event) => store.setUseRefinement(event.currentTarget.checked)}
+          onChange={(event) =>
+            store.setUseRefinement(event.currentTarget.checked)
+          }
         />
       </Group>
       <Stack>
