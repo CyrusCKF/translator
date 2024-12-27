@@ -4,12 +4,14 @@ import { estimatePrompt, refinePrompt, translatePrompt } from "./Prompts.js";
 export async function getAllModels() {
   // await delay(1000);
   const request = fetch("http://localhost:11434/api/tags");
-  request
+  const models = await request
     .then((response) => response.json())
-    .then((data) => console.log(data));
-  return await Ollama.list().then((response) => {
-    return response.models.map((e) => e.name);
-  });
+    .then((data) => data["models"].map((e) => e["name"]));
+  console.log(`Models: ${models}`);
+  return models;
+  // return await Ollama.list().then((response) => {
+  //   return response.models.map((e) => e.name);
+  // });
 }
 
 export async function* translate({
