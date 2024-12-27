@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@mantine/core/styles.css";
-import { Text, Stack, Grid, Center, Box, Modal } from "@mantine/core";
+import { Text, Stack, Grid, Center, Box, Modal, Code } from "@mantine/core";
 
 import classes from "./Paragraph.module.css";
 import ParagraphResults from "./ParagraphResults";
@@ -42,8 +42,19 @@ export default function Paragraph() {
           </Grid.Col>
         </Grid>
       </Stack>
-      <Modal opened={isOpen} onClose={() => setIsOpen(false)} centered>
-        <Text>No ollama connection detected</Text>
+      <Modal
+        opened={isOpen}
+        onClose={() => setIsOpen(false)}
+        centered
+        title="Error"
+      >
+        <Text>Ollama connection is not detected.</Text>
+        <Text>
+          If you already have ollama up and running, add this website to ollama
+          allowed origins and start ollama in command line.
+        </Text>
+        <Text pt="md">For windows, run</Text>
+        <Code block>set OLLAMA_ORIGINS=*{"\n"}ollama serve</Code>
       </Modal>
     </>
   );
