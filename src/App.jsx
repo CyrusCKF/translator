@@ -41,7 +41,7 @@ export default function App() {
   });
 
   return (
-    <HashRouter>
+    <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
