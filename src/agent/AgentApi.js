@@ -2,15 +2,10 @@ import Ollama from "ollama/browser";
 import { estimatePrompt, refinePrompt, translatePrompt } from "./Prompts.js";
 
 export async function getAllModels() {
-  await delay(1000);
-  return await Ollama.list().then(
-    (response) => {
-      return response.models.map((e) => e.name);
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
+  // await delay(1000);
+  return await Ollama.list().then((response) => {
+    return response.models.map((e) => e.name);
+  });
 }
 
 export async function* translate({
@@ -22,29 +17,48 @@ export async function* translate({
   examples = [],
   withRefinement = false,
 } = {}) {
-  await delay(1000);
-  const transPrompt = translatePrompt(text, sourceLang, targetLang, context, examples);
+  // await delay(1000);
+  const transPrompt = translatePrompt(
+    text,
+    sourceLang,
+    targetLang,
+    context,
+    examples
+  );
   const translateResponse = await Ollama.generate({
     model: model,
     prompt: transPrompt,
     stream: true,
   });
-  let rawTranslation = ""
+  let rawTranslation = "";
   for await (const res of translateResponse) {
-    if (res.response == null) continue
-    if (withRefinement) rawTranslation += res.response
+    if (res.response == null) continue;
+    if (withRefinement) rawTranslation += res.response;
     else yield res.response;
   }
   if (!withRefinement) return;
 
-  const estimPrompt = estimatePrompt(text, rawTranslation, sourceLang, targetLang)
+  const estimPrompt = estimatePrompt(
+    text,
+    rawTranslation,
+    sourceLang,
+    targetLang
+  );
   const estimResponse = await Ollama.generate({
     model: model,
     prompt: estimPrompt,
   });
-  const mqmAnnotations = estimResponse.response
+  const mqmAnnotations = estimResponse.response;
 
-  const refPrompt = refinePrompt(text, rawTranslation, sourceLang, targetLang, mqmAnnotations, context, examples)
+  const refPrompt = refinePrompt(
+    text,
+    rawTranslation,
+    sourceLang,
+    targetLang,
+    mqmAnnotations,
+    context,
+    examples
+  );
   const refResponse = await Ollama.generate({
     model: model,
     prompt: refPrompt,

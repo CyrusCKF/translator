@@ -31,14 +31,6 @@ const theme = createTheme({
 });
 
 export default function App() {
-  useEffect(() => {
-    async function getModels() {
-      const response = await getAllModels();
-      console.log(response);
-    }
-    getModels();
-  });
-
   return (
     <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">

@@ -45,10 +45,6 @@ export default function ParagraphConfig() {
     }))
   );
 
-  useEffect(() => {
-    store.getModels();
-  }, []);
-
   return (
     <>
       <Group justify="space-between">
