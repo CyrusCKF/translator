@@ -41,7 +41,7 @@ export default function App() {
   });
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/translator">
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
@@ -61,8 +61,8 @@ export default function App() {
           </AppShell.Navbar> */}
           <AppShell.Main>
             <Routes>
-              <Route path="/translator/" element={<Paragraph />}></Route>
-              <Route path="/translator/help" element={<Help />}></Route>
+              <Route path="/" element={<Paragraph />}></Route>
+              <Route path="/help" element={<Help />}></Route>
               <Route path="*" element={<NotFoundPage />}></Route>
             </Routes>
           </AppShell.Main>
