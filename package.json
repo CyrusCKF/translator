@@ -4,6 +4,9 @@
   "homepage": "https://CyrusCKF.github.io/translator",
   "main": "./src/main.js",
   "private": true,
+  "author": "Cyrus",
+  "license": "ISC",
+  "description": "LocalTranslator",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -16,6 +19,7 @@
     "@tabler/icons-react": "^3.26.0",
     "@testing-library/react": "^16.1.0",
     "cra-template": "1.2.0",
+    "electron-squirrel-startup": "^1.0.1",
     "ollama": "^0.5.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -31,14 +35,14 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "electron": "electron .",
-    "electron-build": "electron-builder"
+    "electron-build": "electron-builder",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "build": {
     "appId": "com.cyrusckf.translator",
-    "productName": "Local translator",
-    "directories": {
-      "output": "dist"
-    }
+    "productName": "LocalTranslator",
+    "extends": null
   },
   "eslintConfig": {
     "extends": [
@@ -60,9 +64,16 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
+    "@electron-forge/cli": "^7.6.0",
+    "@electron-forge/maker-deb": "^7.6.0",
+    "@electron-forge/maker-rpm": "^7.6.0",
+    "@electron-forge/maker-squirrel": "^7.6.0",
+    "@electron-forge/maker-zip": "^7.6.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.6.0",
+    "@electron-forge/plugin-fuses": "^7.6.0",
+    "@electron/fuses": "^1.8.0",
     "@eslint/js": "^9.17.0",
     "electron": "^33.2.1",
-    "electron-builder": "^25.1.8",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.3",
     "gh-pages": "^6.2.0",
