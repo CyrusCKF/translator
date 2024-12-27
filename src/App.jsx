@@ -16,7 +16,6 @@ import classes from "./App.module.css";
 import { getAllModels } from "./agent/AgentApi";
 import Paragraph from "./paragraph/Paragraph";
 import {
-  BrowserRouter,
   HashRouter,
   NavLink,
   Route,
@@ -28,7 +27,7 @@ import Help from "./help/Help";
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
   primaryColor: "green",
-  scale: 1.5,
+  scale: 1.3,
 });
 
 export default function App() {

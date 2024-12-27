@@ -5,11 +5,8 @@ import { Text, Stack, Grid, Center, Box } from "@mantine/core";
 import classes from "./Paragraph.module.css";
 import ParagraphResults from "./ParagraphResults";
 import ParagraphConfig from "./ParagraphConfig";
-import { useLocation } from "react-router-dom";
 
 export default function Paragraph() {
-  // const location = useLocation();
-  // console.log(`Location ${location.pathname}`);
   return (
     <Stack>
       <Text size="xl" fw={700}>
