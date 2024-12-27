@@ -41,7 +41,7 @@ export default function App() {
   });
 
   return (
-    <BrowserRouter basename="/translator">
+    <HashRouter>
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
@@ -68,7 +68,7 @@ export default function App() {
           </AppShell.Main>
         </AppShell>
       </MantineProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
