@@ -41,7 +41,7 @@ export default function App() {
   });
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
@@ -61,15 +61,20 @@ export default function App() {
           </AppShell.Navbar> */}
           <AppShell.Main>
             <Routes>
-              <Route path="/translator" element={<Paragraph />}></Route>
+              <Route path="/" element={<Paragraph />}></Route>
               <Route path="/help" element={<Help />}></Route>
-              <Route path="*" element={<Text>Page not found</Text>}></Route>
+              <Route path="*" element={<NotFoundPage />}></Route>
             </Routes>
           </AppShell.Main>
         </AppShell>
       </MantineProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
+}
+
+function NotFoundPage() {
+  const location = useLocation();
+  return <Text>Page {location.pathname} not found</Text>;
 }
 
 // eslint-disable-next-line react/prop-types
