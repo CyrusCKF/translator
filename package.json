@@ -2,6 +2,7 @@
   "name": "playground",
   "version": "0.1.0",
   "homepage": "https://CyrusCKF.github.io/translator",
+  "main": "./src/main.js",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -28,7 +29,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "electron": "electron .",
+    "electron-build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.cyrusckf.translator",
+    "productName": "Local translator",
+    "directories": {
+      "output": "dist"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -51,10 +61,12 @@
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@eslint/js": "^9.17.0",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
     "eslint": "^8.57.1",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react": "^7.37.3",
     "gh-pages": "^6.2.0",
-    "globals": "^15.13.0",
+    "globals": "^15.14.0",
     "postcss": "^8.4.49",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
