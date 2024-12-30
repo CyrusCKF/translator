@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "@mantine/core/styles.css";
 import {
   createTheme,
@@ -13,7 +13,6 @@ import {
 import { IconHelp, IconLanguageHiragana } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
-import { getAllModels } from "./agent/AgentApi";
 import Paragraph from "./paragraph/Paragraph";
 import {
   HashRouter,
@@ -30,7 +29,7 @@ const theme = createTheme({
   scale: 1.3,
 });
 
-export default function Apppp() {
+export default function App() {
   return (
     <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">
@@ -39,7 +38,7 @@ export default function Apppp() {
           navbar={{ width: "70px" }}
           padding="xl"
         >
-          {/* <AppShell.Navbar>
+          <AppShell.Navbar>
             <Space h="md"></Space>
             <Stack>
               <NavIcon to="/" tooltip="Translation">
@@ -49,7 +48,7 @@ export default function Apppp() {
                 <IconHelp className={classes["nav-icon"]} />
               </NavIcon>
             </Stack>
-          </AppShell.Navbar> */}
+          </AppShell.Navbar>
           <AppShell.Main>
             <Routes>
               <Route path="/" element={<Paragraph />}></Route>
