@@ -1,5 +1,5 @@
 import Ollama from "ollama/browser";
-import { estimatePrompt, refinePrompt, translatePrompt } from "./Prompts.js";
+import { estimatePrompt, refinePrompt, translatePrompt } from "./Prompts.ts";
 
 export async function getAllModels() {
   // await delay(1000);

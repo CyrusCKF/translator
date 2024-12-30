@@ -1,20 +1,13 @@
-// Prompt templates from https://github.com/fzp0424/self_correct_mt
+const translatePromptTemplate = `Context: {context}
 
-export function translatePrompt(text, sourceLang, targetLang, context = "", examples = []) {
-    const contextString = context === "" ? "" : `Context: ${context}`
-    const prompt = `
-${contextString}
-${buildExampleStrings(examples)}
-Translate the following text from ${sourceLang} to ${targetLang}. Reply only the translated text.
+{examples}
 
-${text}
-`
-    return prompt
-}
+Translate the following text from {sourceLang} to {targetLang}. Reply only the translated text.
 
-export function estimatePrompt(origin, translation, sourceLang, targetLang) {
-    const prompt = `
-You are an annotator for the quality of machine translation. Your task is to identify errors and assess the quality of the translation.
+{text}
+`;
+
+const estimatePromptTemplate = `You are an annotator for the quality of machine translation. Your task is to identify errors and assess the quality of the translation.
 
 Example: 
 Based on the source segment and machine translation, identify error types in the translation and classify them. 
@@ -61,45 +54,28 @@ locale convention (currency, date, name, telephone, or time format) style (awkwa
 Each error is classified as one of three categories: critical, major, and minor. 
 Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
 Minor errors are technically errors, but do not disrupt the flow or hinder comprehension.
-${sourceLang} source: ${origin} 
-${targetLang} translation: ${translation}
+{sourceLang} source: {origin} 
+{targetLang} translation: {translation}
 MQM annotations:
-`
-    return prompt
-}
+`;
 
-export function refinePrompt(origin, rawTranslation, sourceLang, targetLang, mqmAnnotations, context="", examples = []) {
-    const contextString = context === "" ? "" : `Context: ${context}`
-    const prompt = `
-Consider the following translation pair from ${sourceLang} to ${targetLang}
+const refinePromptTemplate = `Consider the following translation pair from {sourceLang} to {targetLang}
 
-${contextString}
-${buildExampleStrings(examples)}
-Source: ${origin}
-Raw translation: ${rawTranslation}
+Context: {context}
+
+{examples}
+
+Source: {sourceText}
+Raw translation: {rawTranslation}
 
 I'm not satisfied with the this, becauese some defects exist:
-${mqmAnnotations}
+{mqmAnnotations}
 Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
 Minor errors are technically errors, but do not disrupt the flow or hinder comprehension.
 
-Upon reviewing the translation examples and error information, please proceed to compose the final ${targetLang} translation to the sentence:${origin} 
+Upon reviewing the translation examples and error information, please proceed to compose the final {targetLang} translation to the sentence:{sourceText} 
 First, based on the defects information to locate the error span in the target segement, comprehend its nature, and rectify it.
-Then, imagine yourself as a native ${targetLang} speaker, ensuring that the rectified target segement is not only precise but also faithful to the source segment. 
+Then, imagine yourself as a native {targetLang} speaker, ensuring that the rectified target segement is not only precise but also faithful to the source segment. 
 
-Reply only the translated text results with no explanation.
-`
-    return prompt
-}
-
-function buildExampleStrings(examples) {
-    let exampleSentences = ""
-    if (examples.length >= 1) {
-        exampleSentences += "\nExamples:\n"
-        for (const e of examples) {
-            exampleSentences += `Source: ${e[0]}`
-            exampleSentences += `Target: ${e[1]}`
-        }
-    }
-    return exampleSentences
-}
+Reply only the translation results with no explanation.
+`;

@@ -4,6 +4,7 @@ import {
   getAllModels,
   translate,
 } from "../agent/AgentApi";
+import TranslationAgent from "../translation/agent";
 
 const useParagraphStore = create((set, get) => ({
   availableModels: [],
@@ -46,14 +47,15 @@ const useParagraphStore = create((set, get) => ({
   setOriginalText: (text) => set({ originalText: text }),
 
   getModels: async () => {
-    const models = await getAllModels();
+    const models = await TranslationAgent.getAllModels();
+    console.log(models);
     set({ availableModels: models });
   },
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
     let examplesClone = JSON.parse(JSON.stringify(get().examples));
     examplesClone = examplesClone.filter(
-      ([text1, text2]) => text1 !== "" && text2 !== ""
+      ([text1, text2]) => text1 !== "" && text2 !== "",
     );
     const params = {
       model: get().model,
