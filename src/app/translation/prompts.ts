@@ -1,3 +1,5 @@
+import { TranslationRequest } from "./models";
+
 const translatePromptTemplate = `Context: {context}
 
 {examples}
@@ -79,3 +81,31 @@ Then, imagine yourself as a native {targetLang} speaker, ensuring that the recti
 
 Reply only the translation results with no explanation.
 `;
+
+function formatString(str: string, args: { [key: string]: string }): string {
+  return str.replace(/\{(\w+)\}/g, (match, key) => args[key] || match);
+}
+
+function buildTranslatePrompt(request: TranslationRequest): string {
+  const o = <{ [key: string]: string }>{
+    sourceLang: request.sourceLang,
+    targetLang: request.targetLang,
+    text: request.text,
+  };
+  return formatString(translatePromptTemplate, o);
+}
+
+if (require.main === module) {
+  let formatted = formatString("123{abc}{abc}", { abc: "456" });
+  console.log(formatted);
+
+  const request: TranslationRequest = {
+    text: "string",
+    sourceLang: "string",
+    targetLang: "string",
+    context: "string",
+    examples: ["string"],
+  };
+  formatted = buildTranslatePrompt(request);
+  console.log(formatted);
+}

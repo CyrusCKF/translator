@@ -8,9 +8,9 @@ export default class TranslationAgent {
   }
 
   static async getAllModels() {
-    return await ollama.list().then((response) => {
-      return response.models.map((e) => e.name);
-    });
+    return await ollama
+      .list()
+      .then((response) => response.models.map((e) => e.name));
   }
 
   async *translate(
@@ -24,4 +24,9 @@ export default class TranslationAgent {
     // TODO
     return 0;
   }
+}
+
+if (require.main === module) {
+  console.log("agent");
+  TranslationAgent.getAllModels().then((response) => console.log(response));
 }

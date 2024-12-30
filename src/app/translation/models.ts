@@ -10,3 +10,7 @@ export interface LangText {
   language: string;
   text: string;
 }
+
+if (require.main === module) {
+  console.log("model");
+}
