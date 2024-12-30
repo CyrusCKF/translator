@@ -1,34 +1,23 @@
 {
   "name": "playground",
   "version": "0.1.0",
-  "homepage": "https://CyrusCKF.github.io/translator",
+  "homepage": "https://github.com/CyrusCKF/translator",
   "private": true,
   "author": "Cyrus",
-  "license": "ISC",
+  "license": "MIT",
   "description": "LocalTranslator",
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "typescript",
-    "ts",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "llm",
+    "translate"
   ],
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "https://github.com/CyrusCKF/translator/issues"
   },
   "contributors": [
     {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
+      "name": "Cyrus Cheung",
+      "email": "cyrus.cheungkf@gmail.com",
+      "url": "https://github.com/CyrusCKF"
     }
   ],
   "main": "./.erb/dll/main.bundle.dev.js",
@@ -53,7 +42,6 @@
     "extends browserslist-config-erb"
   ],
   "prettier": {
-    "singleQuote": true,
     "overrides": [
       {
         "files": [
@@ -181,8 +169,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "LocalTranslator",
+    "appId": "CyrusCKF.translator",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -238,15 +226,7 @@
     },
     "extraResources": [
       "./assets/**"
-    ],
-    "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
-    }
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
+    ]
   },
   "devEngines": {
     "runtime": {
