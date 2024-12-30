@@ -2,6 +2,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
 import Paragraph from '../paragraph/Paragraph';
+import Apppp from '../App';
 
 function Hello() {
   return (
@@ -41,10 +42,11 @@ function Hello() {
 }
 
 export default function App() {
+  return <Apppp />
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Paragraph />} />
+        <Route path="/" element={<Apppp />} />
       </Routes>
     </Router>
   );

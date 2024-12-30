@@ -30,7 +30,7 @@ const theme = createTheme({
   scale: 1.3,
 });
 
-export default function App() {
+export default function Apppp() {
   return (
     <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">
