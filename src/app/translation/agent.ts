@@ -37,7 +37,7 @@ export default class TranslationAgent {
     request: TranslationRequest,
     refine: boolean = false,
   ): AsyncGenerator<string, void, unknown> {
-    const translatePrompt = buildTranslatePrompt(request);
+    const translatePrompt = await buildTranslatePrompt(request);
     if (!refine) {
       const translateResponse = await this.generateStream(translatePrompt);
       for await (const res of translateResponse) {
@@ -80,12 +80,10 @@ export default class TranslationAgent {
     });
 
     const [embed1, embed2] = embedResponse.embeddings;
-    let dotProduct = 0;
-    let magnitude1 = 0;
-    let magnitude2 = 0;
-    for (let i = 0; i < embed1.length; i++) dotProduct += embed1[i] * embed2[i];
-    for (let i = 0; i < embed1.length; i++) magnitude1 += embed1[i] * embed1[i];
-    for (let i = 0; i < embed2.length; i++) magnitude2 += embed2[i] * embed2[i];
+    const sum = (accum: number, cur: number) => accum + cur;
+    const dotProduct = embed1.map((e, i) => e * embed2[i]).reduce(sum, 0);
+    const magnitude1 = embed1.map((e) => e * e).reduce(sum, 0);
+    const magnitude2 = embed2.map((e) => e * e).reduce(sum, 0);
     return dotProduct / (magnitude1 * magnitude2);
   }
 }

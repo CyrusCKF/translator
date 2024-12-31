@@ -1,0 +1,8 @@
+Context: {context}
+
+Examples
+{examples}
+
+Translate the following text from {sourceLang} to {targetLang}. Reply only the translated text.
+
+{text}

@@ -1,14 +1,5 @@
 import { TranslationRequest } from "./models";
 
-const translatePromptTemplate = `Context: {context}
-
-Examples
-{examples}
-
-Translate the following text from {sourceLang} to {targetLang}. Reply only the translated text.
-
-{text}`;
-
 const estimatePromptTemplate = `You are an annotator for the quality of machine translation. Your task is to identify errors and assess the quality of the translation.
 
 Example: 
@@ -93,13 +84,17 @@ function buildExampleStrings(examples: [string, string][]): string | undefined {
   return exampleStrings;
 }
 
-export function buildTranslatePrompt(request: TranslationRequest): string {
+export async function buildTranslatePrompt(request: TranslationRequest) {
   const placeholders = <{ [key: string]: string }>{
     ...request,
     context: request.context ?? "",
     examples: buildExampleStrings(request.examples) ?? "",
   };
-  return formatString(translatePromptTemplate, placeholders);
+
+  const template = await window.electron.fs.readAssetFile(
+    "prompts/translate.txt",
+  );
+  return formatString(template, placeholders);
 }
 
 export function buildEstimatePrompt(
@@ -132,10 +127,20 @@ export function buildRefinePrompt(
   return formatString(refinePromptTemplate, placeholders);
 }
 
-if (require.main === module) {
-  let formatted = formatString("123{abc}{abc}", { abc: "456" });
-  console.log(formatted);
+const request: TranslationRequest = {
+  text: "Text to be translated",
+  sourceLang: "English",
+  targetLang: "Spanish",
+  context: "Some context about the translation text",
+  examples: [["Hello", "Hola"]],
+};
 
+buildTranslatePrompt(request).then((res) => {
+  console.log("----- translate -----");
+  console.log(res);
+});
+
+if (require.main === module) {
   const request: TranslationRequest = {
     text: "Text to be translated",
     sourceLang: "English",
@@ -143,15 +148,15 @@ if (require.main === module) {
     context: "Some context about the translation text",
     examples: [["Hello", "Hola"]],
   };
-  formatted = buildTranslatePrompt(request);
-  console.log("----- translate -----");
-  console.log(formatted);
+  // formatted = buildTranslatePrompt(request);
+  // console.log("----- translate -----");
+  // console.log(formatted);
 
-  formatted = buildEstimatePrompt(request, "Raw tranduccion");
-  console.log("----- estimate -----");
-  console.log(formatted);
+  // formatted = buildEstimatePrompt(request, "Raw tranduccion");
+  // console.log("----- estimate -----");
+  // console.log(formatted);
 
-  formatted = buildRefinePrompt(request, "Raw tranduccion", "No minor flaws");
-  console.log("----- refine -----");
-  console.log(formatted);
+  // formatted = buildRefinePrompt(request, "Raw tranduccion", "No minor flaws");
+  // console.log("----- refine -----");
+  // console.log(formatted);
 }
