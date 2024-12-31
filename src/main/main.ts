@@ -14,7 +14,7 @@ import { autoUpdater } from "electron-updater";
 import log from "electron-log";
 import MenuBuilder from "./menu";
 import { resolveHtmlPath } from "./util";
-import { readFileSync } from "fs";
+import { subscribeTranslation } from "../app/translation/bridge";
 
 class AppUpdater {
   constructor() {
@@ -31,14 +31,7 @@ ipcMain.on("ipc-example", async (event, arg) => {
   console.log(msgTemplate(arg));
   event.reply("ipc-example", msgTemplate("pong"));
 });
-
-ipcMain.handle("readAssetFile", (e, filePath: string) => {
-  const RESOURCES_PATH =
-    app !== undefined && app.isPackaged
-      ? path.join(process.resourcesPath, "assets")
-      : path.join(__dirname, "../../assets");
-  return readFileSync(path.join(RESOURCES_PATH, filePath), "utf8");
-});
+subscribeTranslation();
 
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require("source-map-support");

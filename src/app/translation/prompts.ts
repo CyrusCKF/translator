@@ -91,7 +91,7 @@ export async function buildTranslatePrompt(request: TranslationRequest) {
     examples: buildExampleStrings(request.examples) ?? "",
   };
 
-  const template = await window.electron.fs.readAssetFile(
+  const template = await window.translation.readAssetFile(
     "prompts/translate.txt",
   );
   return formatString(template, placeholders);
@@ -127,18 +127,18 @@ export function buildRefinePrompt(
   return formatString(refinePromptTemplate, placeholders);
 }
 
-const request: TranslationRequest = {
-  text: "Text to be translated",
-  sourceLang: "English",
-  targetLang: "Spanish",
-  context: "Some context about the translation text",
-  examples: [["Hello", "Hola"]],
-};
+// const request: TranslationRequest = {
+//   text: "Text to be translated",
+//   sourceLang: "English",
+//   targetLang: "Spanish",
+//   context: "Some context about the translation text",
+//   examples: [["Hello", "Hola"]],
+// };
 
-buildTranslatePrompt(request).then((res) => {
-  console.log("----- translate -----");
-  console.log(res);
-});
+// buildTranslatePrompt(request).then((res) => {
+//   console.log("----- translate -----");
+//   console.log(res);
+// });
 
 if (require.main === module) {
   const request: TranslationRequest = {
