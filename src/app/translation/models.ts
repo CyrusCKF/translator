@@ -7,10 +7,6 @@ export interface TranslationRequest {
 }
 
 export interface LangText {
-  language: string;
+  lang: string;
   text: string;
-}
-
-if (require.main === module) {
-  console.log("model");
 }

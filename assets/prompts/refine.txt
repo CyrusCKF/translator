@@ -1,0 +1,20 @@
+Consider the following translation pair from {sourceLang} to {targetLang}
+
+Context: {context}
+
+Examples
+{examples}
+
+Source: {source}
+Raw translation: {rawTranslation}
+
+I'm not satisfied with the this, becauese some defects exist:
+{mqmAnnotations}
+Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
+Minor errors are technically errors, but do not disrupt the flow or hinder comprehension.
+
+Upon reviewing the translation examples and error information, please proceed to compose the final {targetLang} translation to the sentence:{source} 
+First, based on the defects information to locate the error span in the target segement, comprehend its nature, and rectify it.
+Then, imagine yourself as a native {targetLang} speaker, ensuring that the rectified target segement is not only precise but also faithful to the source segment. 
+
+Reply only the translation results with no explanation.
