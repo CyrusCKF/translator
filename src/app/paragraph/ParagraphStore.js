@@ -72,13 +72,16 @@ const useParagraphStore = create((set, get) => ({
     }
     set({ isTranslating: false });
 
-    const similarity = await calculateSimilarity({
-      text1: params.text,
-      text2: get().translatedText,
-      language1: params.sourceLang,
-      language2: params.targetLang,
-      model: params.model,
-    });
+    const similarity = await new TranslationAgent(get().model).similarity(
+      {
+        text: params.text,
+        language: params.sourceLang,
+      },
+      {
+        text: get().translatedText,
+        language: params.targetLang,
+      },
+    );
     set({ confidenceScore: similarity });
   },
 }));

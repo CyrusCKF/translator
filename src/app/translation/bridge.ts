@@ -7,7 +7,7 @@ export async function subscribeTranslation() {
   const path = await import("path");
   const fs = await import("fs");
 
-  ipcMain.handle("readAssetFile", (e, filePath: string) => {
+  ipcMain.handle("readAssetTextFile", (e, filePath: string) => {
     const RESOURCES_PATH =
       app !== undefined && app.isPackaged
         ? path.join(process.resourcesPath, "assets")
@@ -18,8 +18,8 @@ export async function subscribeTranslation() {
 
 export function exposeTranslation() {
   const translationHandler = {
-    readAssetFile: (filePath: string): Promise<string> => {
-      return ipcRenderer.invoke("readAssetFile", filePath);
+    readAssetTextFile: (filePath: string): Promise<string> => {
+      return ipcRenderer.invoke("readAssetTextFile", filePath);
     },
   };
   contextBridge.exposeInMainWorld("translation", translationHandler);

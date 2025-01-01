@@ -91,7 +91,7 @@ export async function buildTranslatePrompt(request: TranslationRequest) {
     examples: buildExampleStrings(request.examples) ?? "",
   };
 
-  const template = await window.translation.readAssetFile(
+  const template = await window.translation.readAssetTextFile(
     "prompts/translate.txt",
   );
   return formatString(template, placeholders);

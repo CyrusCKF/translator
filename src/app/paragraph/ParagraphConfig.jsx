@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // eslint-disable react-hooks/exhaustive-deps
-import React, { useEffect } from "react";
+import React from "react";
 import "@mantine/core/styles.css";
 import {
   Text,
@@ -23,7 +23,7 @@ import {
   IconQuestionMark,
   IconTrashX,
 } from "@tabler/icons-react";
-import LANGUAGES from "../shared/Languages";
+import LANGUAGES from "../config/languages";
 
 export default function ParagraphConfig() {
   const store = useParagraphStore(
