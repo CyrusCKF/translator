@@ -1,7 +1,7 @@
 {
-  "name": "local-translator",
+  "name": "calt",
   "version": "4.6.0",
-  "description": "Local translator",
+  "description": "Context-aware LLM Translator",
   "license": "MIT",
   "author": {
     "name": "Cheung Ka Fai",
