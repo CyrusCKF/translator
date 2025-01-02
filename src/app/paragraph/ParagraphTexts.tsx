@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "@mantine/core/styles.css";
 import {
   Text,
@@ -12,36 +12,24 @@ import {
   Popover,
 } from "@mantine/core";
 
-import classes from "./ParagraphResults.module.css";
+import classes from "./ParagraphTexts.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
-import useParagraphStore from "./ParagraphStore";
-import { useShallow } from "zustand/shallow";
+import useParagraphStore from "./store";
 
-export default function ParagraphResults() {
-  const store = useParagraphStore(
-    useShallow((state) => ({
-      model: state.model,
-      fromLanguage: state.fromLanguage,
-      toLanguage: state.toLanguage,
-      originalText: state.originalText,
-      setOriginalText: state.setOriginalText,
-      isTranslating: state.isTranslating,
-      startTranslation: state.startTranslation,
-      translatedText: state.translatedText,
-      confidenceScore: state.confidenceScore,
-    }))
-  );
+export default function ParagraphTexts() {
+  const model = useParagraphStore((state) => state.model);
+  const request = useParagraphStore((state) => state.request);
+  const isTranslating = useParagraphStore((state) => state.isTranslating);
+  const translatedText = useParagraphStore((state) => state.translatedText);
+  const confidenceScore = useParagraphStore((state) => state.confidenceScore);
+  const setOriginalText = useParagraphStore((state) => state.setOriginalText);
+  const startTranslation = useParagraphStore((state) => state.startTranslation);
 
-  const canTranslate =
-    store.model !== "" &&
-    store.fromLanguage !== "" &&
-    store.toLanguage !== "" &&
-    store.originalText !== "";
-
-  async function handlePaste() {
-    const text = await navigator.clipboard.readText();
-    store.setOriginalText(text);
-  }
+  const canTranslate: boolean =
+    model !== "" &&
+    request.sourceLang !== "" &&
+    request.targetLang !== "" &&
+    request.text !== "";
 
   return (
     <>
@@ -50,19 +38,19 @@ export default function ParagraphResults() {
           placeholder="Original text"
           autosize
           minRows={10}
-          value={store.originalText}
-          onChange={(e) => store.setOriginalText(e.currentTarget.value)}
+          value={request.text}
+          onChange={(event) => setOriginalText(event.currentTarget.value)}
         ></Textarea>
         <Group gap="xs" className={classes["bottom-right-actions"]}>
           <AnnotatedIconButton
             tooltip="Paste from clipboard"
-            onClick={handlePaste}
+            onClick={() => navigator.clipboard.readText().then(setOriginalText)}
           >
             <IconClipboard className={classes["action-icon"]}></IconClipboard>
           </AnnotatedIconButton>
           <AnnotatedIconButton
             tooltip="Remove all text"
-            onClick={() => store.setOriginalText("")}
+            onClick={() => setOriginalText("")}
           >
             <IconPlaylistX className={classes["action-icon"]}></IconPlaylistX>
           </AnnotatedIconButton>
@@ -70,15 +58,15 @@ export default function ParagraphResults() {
       </Box>
       <Button
         className={classes["translate-button"]}
-        loading={store.isTranslating}
-        onClick={store.startTranslation}
+        loading={isTranslating}
+        onClick={startTranslation}
         disabled={!canTranslate}
       >
         Translate
       </Button>
       <Box pos="relative">
         <LoadingOverlay
-          visible={store.isTranslating && store.translatedText === ""}
+          visible={isTranslating && translatedText === ""}
           overlayProps={{ radius: "sm", blur: 2 }}
           loaderProps={{ type: "dots" }}
         />
@@ -88,12 +76,12 @@ export default function ParagraphResults() {
           disabled
           autosize
           minRows={10}
-          value={store.translatedText}
+          value={translatedText}
         ></Textarea>
         <Box className={classes["bottom-left"]}>
-          {store.confidenceScore != null && (
+          {confidenceScore != null && (
             <Text c="dimmed" size="sm">
-              Confidence: {store.confidenceScore.toFixed(2)}
+              Confidence: {confidenceScore.toFixed(2)}
             </Text>
           )}
         </Box>
@@ -101,7 +89,7 @@ export default function ParagraphResults() {
           <AnnotatedIconButton
             tooltip="Copy to clipboard"
             popover="Copied!"
-            onClick={() => navigator.clipboard.writeText(store.translatedText)}
+            onClick={() => navigator.clipboard.writeText(translatedText)}
           >
             <IconCopy className={classes["action-icon"]}></IconCopy>
           </AnnotatedIconButton>
@@ -111,8 +99,19 @@ export default function ParagraphResults() {
   );
 }
 
-// eslint-disable-next-line react/prop-types
-function AnnotatedIconButton({ popover = "", tooltip, onClick, children }) {
+interface AnnotatedIconButtonProps {
+  popover?: string;
+  tooltip: string;
+  onClick: () => void;
+  children: JSX.Element;
+}
+
+function AnnotatedIconButton({
+  popover = "",
+  tooltip,
+  onClick,
+  children,
+}: AnnotatedIconButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleButtonClick() {

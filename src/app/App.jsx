@@ -13,7 +13,6 @@ import {
 import { IconHelp, IconLanguageHiragana } from "@tabler/icons-react";
 
 import classes from "./App.module.css";
-import Paragraph from "./paragraph/Paragraph";
 import {
   HashRouter,
   NavLink,
@@ -22,6 +21,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Help from "./help/Help";
+import Paragraph from "./paragraph";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
@@ -31,7 +31,7 @@ const theme = createTheme({
 
 export default function App() {
   window.translation
-    .readAssetFile("prompts/translate.txt")
+    .readAssetTextFile("prompts", "translate.txt")
     .then((res) => console.log(res));
 
   return (
@@ -42,7 +42,7 @@ export default function App() {
           navbar={{ width: "70px" }}
           padding="xl"
         >
-          {/* <AppShell.Navbar>
+          <AppShell.Navbar>
             <Space h="md"></Space>
             <Stack>
               <NavIcon to="/" tooltip="Translation">
@@ -52,7 +52,7 @@ export default function App() {
                 <IconHelp className={classes["nav-icon"]} />
               </NavIcon>
             </Stack>
-          </AppShell.Navbar> */}
+          </AppShell.Navbar>
           <AppShell.Main>
             <Routes>
               <Route path="/" element={<Paragraph />}></Route>

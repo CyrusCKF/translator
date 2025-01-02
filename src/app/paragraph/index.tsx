@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "@mantine/core/styles.css";
 import { Text, Stack, Grid, Center, Box, Modal, Code } from "@mantine/core";
 
-import classes from "./Paragraph.module.css";
-import ParagraphResults from "./ParagraphResults";
+import classes from "./index.module.css";
+import ParagraphTexts from "./ParagraphTexts";
+import useParagraphStore from "./store";
 import ParagraphConfig from "./ParagraphConfig";
-import useParagraphStore from "./ParagraphStore";
 
 export default function Paragraph() {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    async function testOllama() {
+    async function initOllama() {
       try {
-        await useParagraphStore.getState().getModels();
+        await useParagraphStore.getState().initializeParams();
       } catch (e) {
         setIsOpen(true);
       }
     }
-    testOllama();
+    initOllama();
   }, []);
 
   return (
@@ -27,7 +27,7 @@ export default function Paragraph() {
           Ollama translation
         </Text>
         <Grid align="stretch">
-          <Grid.Col span={4}>
+          <Grid.Col span={5.5}>
             <Stack>
               <ParagraphConfig></ParagraphConfig>
             </Stack>
@@ -37,8 +37,8 @@ export default function Paragraph() {
               <Box className={classes["vertical-divider"]}></Box>
             </Center>
           </Grid.Col>
-          <Grid.Col span={5}>
-            <ParagraphResults></ParagraphResults>
+          <Grid.Col span={5.5}>
+            <ParagraphTexts></ParagraphTexts>
           </Grid.Col>
         </Grid>
       </Stack>

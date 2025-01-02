@@ -4,6 +4,7 @@
 import { app, contextBridge, ipcMain, ipcRenderer } from "electron";
 
 export async function subscribeTranslation() {
+  // import here so using this file in each electron process won't cause error
   const path = await import("path");
   const fs = await import("fs");
 
@@ -19,7 +20,7 @@ export async function subscribeTranslation() {
 export function exposeTranslation() {
   const translationHandler = {
     readAssetTextFile: (...paths: string[]): Promise<string> => {
-      return ipcRenderer.invoke("readAssetTextFile", paths);
+      return ipcRenderer.invoke("readAssetTextFile", ...paths);
     },
   };
   contextBridge.exposeInMainWorld("translation", translationHandler);

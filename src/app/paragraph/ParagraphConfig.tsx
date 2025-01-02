@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-// eslint-disable react-hooks/exhaustive-deps
-import React from "react";
 import "@mantine/core/styles.css";
 import {
   Text,
@@ -16,34 +13,26 @@ import {
 } from "@mantine/core";
 
 import classes from "./ParagraphConfig.module.css";
-import useParagraphStore from "./ParagraphStore";
-import { useShallow } from "zustand/shallow";
 import {
   IconLayoutGridAdd,
   IconQuestionMark,
   IconTrashX,
 } from "@tabler/icons-react";
 import LANGUAGES from "../config/languages";
+import useParagraphStore from "./store";
 
 export default function ParagraphConfig() {
-  const store = useParagraphStore(
-    useShallow((state) => ({
-      getModels: state.getModels,
-      availableModels: state.availableModels,
-      fromLanguage: state.fromLanguage,
-      toLanguage: state.toLanguage,
-      useRefinement: state.useRefinement,
-      examples: state.examples,
-      setModel: state.setModel,
-      setFromLanguage: state.setFromLanguage,
-      setToLanguage: state.setToLanguage,
-      setUseRefinement: state.setUseRefinement,
-      setContext: state.setContext,
-      addExample: state.addExample,
-      removeExampleAt: state.removeExampleAt,
-      modifyExampleAt: state.modifyExampleAt,
-    }))
-  );
+  const availableModels = useParagraphStore((state) => state.availableModels);
+  const request = useParagraphStore((state) => state.request);
+  const useRefinement = useParagraphStore((state) => state.useRefinement);
+  const setModel = useParagraphStore((state) => state.setModel);
+  const setSourceLang = useParagraphStore((state) => state.setSourceLang);
+  const setTargetLang = useParagraphStore((state) => state.setTargetLang);
+  const setUseRefinement = useParagraphStore((state) => state.setUseRefinement);
+  const setContext = useParagraphStore((state) => state.setContext);
+  const addExample = useParagraphStore((state) => state.addExample);
+  const removeExampleAt = useParagraphStore((state) => state.removeExampleAt);
+  const modifyExampleAt = useParagraphStore((state) => state.modifyExampleAt);
 
   return (
     <>
@@ -54,9 +43,9 @@ export default function ParagraphConfig() {
             *
           </Text>
         </Text>
-
-        <Select data={store.availableModels} onChange={store.setModel}></Select>
+        <Select data={availableModels} onChange={setModel}></Select>
       </Group>
+
       <Group justify="space-between">
         <Text pr="md">
           Languages
@@ -69,17 +58,18 @@ export default function ParagraphConfig() {
             data={LANGUAGES}
             w="7rem"
             searchable
-            onChange={store.setFromLanguage}
+            onChange={setSourceLang}
           ></Select>
           <Text>to</Text>
           <Select
             data={LANGUAGES}
             w="7rem"
             searchable
-            onChange={store.setToLanguage}
+            onChange={setTargetLang}
           ></Select>
         </Group>
       </Group>
+
       <Group justify="space-between">
         <Group>
           <Text>Refine results</Text>
@@ -89,19 +79,18 @@ export default function ParagraphConfig() {
             </HoverCard.Target>
             <HoverCard.Dropdown>
               <Text size="sm">
-                Analyze and edit the raw translation results. Uses
-                about 3x time.
+                Analyze and edit the raw translation results. Uses about 3x
+                time.
               </Text>
             </HoverCard.Dropdown>
           </HoverCard>
         </Group>
         <Switch
-          checked={store.useRefinement}
-          onChange={(event) =>
-            store.setUseRefinement(event.currentTarget.checked)
-          }
+          checked={useRefinement}
+          onChange={(event) => setUseRefinement(event.currentTarget.checked)}
         />
       </Group>
+
       <Stack>
         <Text>Context</Text>
         <Textarea
@@ -109,33 +98,38 @@ export default function ParagraphConfig() {
           autosize
           minRows={4}
           maxRows={8}
-          onChange={(e) => store.setContext(e.currentTarget.value)}
+          onChange={(event) => setContext(event.currentTarget.value)}
         ></Textarea>
       </Stack>
+
       <Stack>
         <Text>Examples</Text>
-        {store.examples.map((e, i) => (
+        {request.examples.map((_, i) => (
           <ConfigExample
             key={`${i}`}
             description={`Pair ${i + 1}`}
-            lang1={store.fromLanguage}
-            lang2={store.toLanguage}
-            onText1Change={(text) => store.modifyExampleAt(i, text, null)}
-            onText2Change={(text) => store.modifyExampleAt(i, null, text)}
-            onRemove={() => store.removeExampleAt(i)}
+            lang1={request.sourceLang}
+            lang2={request.targetLang}
+            onText1Change={(text) => modifyExampleAt(i, text, undefined)}
+            onText2Change={(text) => modifyExampleAt(i, undefined, text)}
+            onRemove={() => removeExampleAt(i)}
           ></ConfigExample>
         ))}
-        <ActionIcon
-          variant="subtle"
-          size="sm"
-          w="100%"
-          onClick={store.addExample}
-        >
+        <ActionIcon variant="subtle" size="sm" w="100%" onClick={addExample}>
           <IconLayoutGridAdd></IconLayoutGridAdd>
         </ActionIcon>
       </Stack>
     </>
   );
+}
+
+interface ConfigExampleProps {
+  description: string;
+  lang1: string;
+  lang2: string;
+  onRemove: () => void;
+  onText1Change: (text: string) => void;
+  onText2Change: (text: string) => void;
 }
 
 function ConfigExample({
@@ -145,7 +139,7 @@ function ConfigExample({
   onRemove,
   onText1Change,
   onText2Change,
-}) {
+}: ConfigExampleProps) {
   const topSection = <Text size="xs">{lang1.slice(0, 2)}</Text>;
   const bottomSection = <Text size="xs">{lang2.slice(0, 2)}</Text>;
 

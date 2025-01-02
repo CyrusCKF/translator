@@ -13,9 +13,9 @@ interface ParagraphStore {
   isTranslating: boolean;
   confidenceScore: number | null;
 
-  setModel: (model: string) => void;
-  setSourceLang: (lang: string) => void;
-  setTargetLang: (lang: string) => void;
+  setModel: (model: string | null) => void;
+  setSourceLang: (lang: string | null) => void;
+  setTargetLang: (lang: string | null) => void;
   setUseRefinement: (use: boolean) => void;
   setContext: (context: string) => void;
   removeExampleAt: (index: number) => void;
@@ -23,8 +23,7 @@ interface ParagraphStore {
   modifyExampleAt: (index: number, new1?: string, new2?: string) => void;
   setOriginalText: (text: string) => void;
 
-  getModels: () => Promise<void>;
-  getLanguages: () => Promise<void>;
+  initializeParams: () => Promise<void>;
   startTranslation: () => Promise<void>;
 }
 
@@ -38,11 +37,11 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
   isTranslating: false,
   confidenceScore: null,
 
-  setModel: (model) => set({ model: model }),
+  setModel: (model) => set({ model: model ?? "" }),
   setSourceLang: (lang) =>
-    set({ request: { ...get().request, sourceLang: lang } }),
+    set({ request: { ...get().request, sourceLang: lang ?? "" } }),
   setTargetLang: (lang) =>
-    set({ request: { ...get().request, targetLang: lang } }),
+    set({ request: { ...get().request, targetLang: lang ?? "" } }),
   setUseRefinement: (useRefinement) => set({ useRefinement: useRefinement }),
   setContext: (context) =>
     set({ request: { ...get().request, context: context } }),
@@ -67,12 +66,10 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
     }),
   setOriginalText: (text) => set({ request: { ...get().request, text: text } }),
 
-  getModels: async () => {
+  initializeParams: async () => {
     const models = await TranslationAgent.getAllModels();
-    console.log(models);
-    set({ availableModels: models });
+    set({ availableModels: models, allLanguages: LANGUAGES });
   },
-  getLanguages: async () => set({ allLanguages: LANGUAGES }),
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
     const agent = new TranslationAgent(get().model);
