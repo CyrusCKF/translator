@@ -1,10 +1,7 @@
 # Context-aware LLM Translator (CALT)
 
-This project is an LLM translator that uses Ollama and is built with react, electron and mantine. Downloadable applications can be found in the sidebar.
-
-## Development
-
-This project uses _Electron React Boilerplate_ https://electron-react-boilerplate.js.org/
+This project is an LLM translator that uses Ollama and is built with react, electron and mantine.  
+Downloadable the latest release to use without node environment. https://github.com/CyrusCKF/translator/releases
 
 ## FAQs
 
@@ -26,7 +23,7 @@ Yes. Once the model is downloaded, the project runs locally.
 
 5. Can I tune the prompts for translation?
 
-Yes. Go to `assets\prompts` in the application folder and modify the txt files.
+Yes. Go to `resources/assets/prompts` in the application folder and modify the txt files.
 
 6. Can I use my own LLM?
 
@@ -35,3 +32,7 @@ Make sure your own model complies with the Ollama interface and it is good to go
 7. I am interested in the technical details. Where can I learn it?
 
 Please check `technical-notes.md` in this repo.
+
+## Development
+
+This project uses _Electron React Boilerplate_ https://electron-react-boilerplate.js.org/

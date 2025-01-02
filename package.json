@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "translator",
   "version": "0.1.0",
   "homepage": "https://github.com/CyrusCKF/translator",
   "private": true,
@@ -171,7 +171,7 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "CALT",
+    "productName": "calt",
     "appId": "CyrusCKF.translator",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",

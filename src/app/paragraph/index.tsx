@@ -24,10 +24,10 @@ export default function Paragraph() {
     <>
       <Stack>
         <Text size="xl" fw={700}>
-          Ollama translation
+          Context-aware LLM Translator (CALT)
         </Text>
         <Grid align="stretch">
-          <Grid.Col span={5.5}>
+          <Grid.Col span={4}>
             <Stack>
               <ParagraphConfig></ParagraphConfig>
             </Stack>
@@ -37,7 +37,7 @@ export default function Paragraph() {
               <Box className={classes["vertical-divider"]}></Box>
             </Center>
           </Grid.Col>
-          <Grid.Col span={5.5}>
+          <Grid.Col span={5}>
             <ParagraphTexts></ParagraphTexts>
           </Grid.Col>
         </Grid>

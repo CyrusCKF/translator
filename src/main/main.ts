@@ -21,6 +21,7 @@ class AppUpdater {
     log.transports.file.level = "info";
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
+    log.info(`Version: ${app.getVersion()}`);
   }
 }
 

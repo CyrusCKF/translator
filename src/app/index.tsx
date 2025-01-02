@@ -29,10 +29,6 @@ const theme = createTheme({
 });
 
 export default function App() {
-  // window.translation
-  //   .readAssetTextFile("prompts", "translate.txt")
-  //   .then((res) => console.log(res));
-
   return (
     <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">
