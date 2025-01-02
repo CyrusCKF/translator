@@ -1,4 +1,3 @@
-import React from "react";
 import "@mantine/core/styles.css";
 import {
   createTheme,
@@ -12,7 +11,7 @@ import {
 } from "@mantine/core";
 import { IconHelp, IconLanguageHiragana } from "@tabler/icons-react";
 
-import classes from "./App.module.css";
+import classes from "./index.module.css";
 import {
   HashRouter,
   NavLink,
@@ -30,16 +29,16 @@ const theme = createTheme({
 });
 
 export default function App() {
-  window.translation
-    .readAssetTextFile("prompts", "translate.txt")
-    .then((res) => console.log(res));
+  // window.translation
+  //   .readAssetTextFile("prompts", "translate.txt")
+  //   .then((res) => console.log(res));
 
   return (
     <HashRouter basename="/">
       <MantineProvider theme={theme} forceColorScheme="dark">
         <AppShell
           classNames={{ navbar: classes.navbar }}
-          navbar={{ width: "70px" }}
+          navbar={{ width: "70px", breakpoint: "sm" }}
           padding="xl"
         >
           <AppShell.Navbar>
@@ -71,8 +70,13 @@ function NotFoundPage() {
   return <Text>Page {location.pathname} not found</Text>;
 }
 
-// eslint-disable-next-line react/prop-types
-function NavIcon({ to, tooltip, children }) {
+interface NavIconProps {
+  to: string;
+  tooltip: string;
+  children: JSX.Element;
+}
+
+function NavIcon({ to, tooltip, children }: NavIconProps) {
   const location = useLocation();
   const variant = location.pathname === to ? "filled" : "light";
   return (

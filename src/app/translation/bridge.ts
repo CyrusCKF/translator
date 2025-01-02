@@ -28,7 +28,6 @@ export function exposeTranslation() {
 }
 
 declare global {
-  // eslint-disable-next-line no-unused-vars
   interface Window {
     translation: ReturnType<typeof exposeTranslation>;
   }
