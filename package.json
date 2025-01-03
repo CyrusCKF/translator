@@ -1,6 +1,6 @@
 {
   "name": "translator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/CyrusCKF/translator",
   "private": true,
   "author": "Cyrus",
@@ -228,7 +228,12 @@
     },
     "extraResources": [
       "./assets/**"
-    ]
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "CyrusCKF",
+      "repo": "translator"
+    }
   },
   "devEngines": {
     "runtime": {

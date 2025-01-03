@@ -32,6 +32,7 @@ export default function Paragraph() {
           <Text c="dimmed">Version {version}</Text>
         </Group>
         <Grid align="stretch">
+          {/* <Grid.Col span={0.5} /> */}
           <Grid.Col span={4}>
             <Stack>
               <ParagraphConfig></ParagraphConfig>

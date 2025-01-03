@@ -1,38 +1,55 @@
-# Context-Aware LLM Translator (CALT)
+# CALT: Context-Aware LLM Translator
 
-This project is an LLM translator that uses Ollama and is built with react, electron and mantine.  
-Downloadable the latest release to use without node environment. https://github.com/CyrusCKF/translator/releases
+Deliver context-aware translation results using Large Language Models (LLM), all free and open source.
 
-## FAQs
+## 📷 Screenshots
 
-1. Purpose of this project
+<img src="doc\screenshot.png" alt="screenshot 1" width="50%"/>
 
-This project incorporates recent research to leverage LLM for the best translation results. The main difficulties arise from the limited capacities of pretrained local LLM.
+## 🏬 Installation
 
-2. Comparison with Google translate/Deepl/etc ...
+1. Download the [latest release](https://github.com/CyrusCKF/translator/releases) and extract the files
+2. Ensure that [Ollama](https://ollama.com/) is running
+3. Run the `.exe` file
 
-It has always been challenging to use machine translation for creative media project. The context, tone and lore will often be lost in translation and the style is not consistent. When using LLM, it is possible to provide context and examples, making a more coherent results.
+## 🌟 About the Project
 
-3. Comparison with ChatGPT/GPT4-o/etc ...
+This project leverages recent research to utilize Large Language Models (LLMs) for optimal translation results. One of the main challenges is the limited capacity of pre-trained LLMs running in a local environment.
 
-This project uses Ollama as the LLM backend. The models will be run locally and the performance depends on your machine and model chosen. Running this project is also completely free.
+### 🎯 Features
 
-4. Is this app entirely offline?
+* **Free and Offline Translation**: Utilize local LLMs for translation without the need for an internet connection.
+* **Context-Aware Input**: Input context to avoid language ambiguity and improve accuracy.
+* **Custom Example Pairs**: Add example pairs to ensure more consistent and tone-appropriate translations.
+* **Self-Refining Results**: Benefit from self-refinement algorithms that enhance the quality of translations.
+* **Translation Confidence Display**: View confidence levels for the translation to gauge reliability.
 
-Yes. Once the model is downloaded, the project runs locally.
+### Comparison with Google Translate, DeepL, etc
 
-5. Can I tune the prompts for translation?
+Machine translation for creative media projects has always been challenging. Traditional tools like Google Translate and DeepL often lose context, tone, and lore, resulting in inconsistent styles. However, by using LLMs, it is possible to provide context and examples, leading to more coherent and contextually accurate results.
 
-Yes. Go to `resources/assets/prompts` in the application folder and modify the txt files.
+### Comparison with ChatGPT/GPT-4, etc
 
-6. Can I use my own LLM?
+This project uses Ollama as the LLM backend, allowing models to run locally. The performance depends on your machine and the model chosen. Unlike cloud-based solutions like ChatGPT or GPT-4, running this project is completely free.
 
-Make sure your own model complies with the Ollama interface and it is good to go.
+## ❔ FAQ
 
-7. I am interested in the technical details. Where can I learn it?
+* **Is this app entirely offline?**
 
-Please check `technical-notes.md` in this repo.
+    Yes. Once the model is downloaded, the project runs locally.
 
-## Development
+* **Can I tune the prompts for translation?**
 
-This project uses _Electron React Boilerplate_ https://electron-react-boilerplate.js.org/
+    Yes. Go to `resources/assets/prompts` in the application folder and modify the `.txt` files.
+
+* **Can I use my own LLM?**
+
+    Yes, as long as your model complies with the Ollama interface.
+
+* **I am interested in the technical details. Where can I learn more?**
+
+    Please check [`technical.md`](doc/technical.md)
+
+## 👋 Development
+
+Please check [`technical.md`](doc/technical.md)

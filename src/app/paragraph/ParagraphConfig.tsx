@@ -79,8 +79,8 @@ export default function ParagraphConfig() {
             </HoverCard.Target>
             <HoverCard.Dropdown>
               <Text size="sm">
-                Analyze and edit the raw translation results. Uses about 3x
-                time.
+                Analyze and edit the raw translation results. Takes
+                approximately three times longer.
               </Text>
             </HoverCard.Dropdown>
           </HoverCard>

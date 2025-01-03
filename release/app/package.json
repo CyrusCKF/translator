@@ -1,12 +1,12 @@
 {
   "name": "calt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Context-Aware LLM Translator",
   "license": "MIT",
   "author": {
     "name": "Cheung Ka Fai",
     "email": "cyrus.cheungkf@gmail.com",
-    "url": "https://github.com/CyrusCKF/translator"
+    "url": "https://github.com/CyrusCKF"
   },
   "main": "./dist/main/main.js",
   "scripts": {

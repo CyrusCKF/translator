@@ -17,12 +17,13 @@ import { resolveHtmlPath } from "./util";
 import { subscribeTranslation } from "../app/translation/bridge";
 import { subscribeConfig } from "../app/config/bridge";
 
+log.info(`App version: ${app.getVersion()}`);
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = "info";
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
-    log.info(`Version: ${app.getVersion()}`);
   }
 }
 
@@ -114,7 +115,7 @@ const createWindow = async () => {
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 };
 
 /**
