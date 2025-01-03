@@ -1,4 +1,4 @@
-# Context-aware LLM Translator (CALT)
+# Context-Aware LLM Translator (CALT)
 
 This project is an LLM translator that uses Ollama and is built with react, electron and mantine.  
 Downloadable the latest release to use without node environment. https://github.com/CyrusCKF/translator/releases

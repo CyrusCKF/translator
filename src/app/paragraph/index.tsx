@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import "@mantine/core/styles.css";
-import { Text, Stack, Grid, Center, Box, Modal, Code } from "@mantine/core";
+import { Text, Stack, Grid, Center, Box, Modal, Group } from "@mantine/core";
 
 import classes from "./index.module.css";
 import ParagraphTexts from "./ParagraphTexts";
 import useParagraphStore from "./store";
 import ParagraphConfig from "./ParagraphConfig";
+import useConfigStore from "../config/store";
 
 export default function Paragraph() {
+  const version = useConfigStore((state) => state.version);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     async function initOllama() {
@@ -23,9 +25,12 @@ export default function Paragraph() {
   return (
     <>
       <Stack>
-        <Text size="xl" fw={700}>
-          Context-aware LLM Translator (CALT)
-        </Text>
+        <Group justify="space-between">
+          <Text size="xl" fw={700}>
+            Context-Aware LLM Translator
+          </Text>
+          <Text c="dimmed">Version {version}</Text>
+        </Group>
         <Grid align="stretch">
           <Grid.Col span={4}>
             <Stack>
@@ -49,12 +54,7 @@ export default function Paragraph() {
         title="Error"
       >
         <Text>Ollama connection is not detected.</Text>
-        <Text>
-          If you already have ollama up and running, add this website to ollama
-          allowed origins and start ollama in command line.
-        </Text>
-        <Text pt="md">For windows, run</Text>
-        <Code block>set OLLAMA_ORIGINS=*{"\n"}ollama serve</Code>
+        <Text>Please make sure your ollama instance is running.</Text>
       </Modal>
     </>
   );

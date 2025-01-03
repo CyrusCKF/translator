@@ -15,6 +15,7 @@ import log from "electron-log";
 import MenuBuilder from "./menu";
 import { resolveHtmlPath } from "./util";
 import { subscribeTranslation } from "../app/translation/bridge";
+import { subscribeConfig } from "../app/config/bridge";
 
 class AppUpdater {
   constructor() {
@@ -33,6 +34,7 @@ ipcMain.on("ipc-example", async (event, arg) => {
   event.reply("ipc-example", msgTemplate("pong"));
 });
 subscribeTranslation();
+subscribeConfig();
 
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require("source-map-support");

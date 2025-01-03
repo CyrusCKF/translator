@@ -3,7 +3,7 @@ import { LangText, TranslationRequest } from "../translation/models";
 import TranslationAgent from "../translation/agent";
 import LANGUAGES from "../config/languages";
 
-interface ParagraphStore {
+export interface ParagraphStore {
   request: TranslationRequest;
   model: string;
   availableModels: string[];
