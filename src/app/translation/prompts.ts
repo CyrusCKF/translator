@@ -15,7 +15,7 @@ function buildExampleStrings(examples: [string, string][]): string | undefined {
 }
 
 async function readPromptFile(filename: string) {
-  return await window.translation.readAssetTextFile("prompts", filename);
+  return await window.api.readAssetTextFile("prompts", filename);
 }
 
 export async function buildTranslatePrompt(request: TranslationRequest) {

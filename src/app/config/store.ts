@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import TranslationAgent from "../translation/agent";
 import { Language } from "../translation/models";
-import LANGUAGES from "./language";
+import { DEFAULT_HOST, fetchFromHost, readLanguagesCsv } from "./util";
 
 export interface ConfigStore {
   version: string;
@@ -18,20 +18,17 @@ const useConfigStore = create<ConfigStore>()((set, get) => {
   async function updateHost(host: string) {
     await Promise<void>; // so that set works after init
     set({ host: host });
-    try {
-      const models = await TranslationAgent.getAllModels(host);
-      set({ models: models, alertInvalidHost: false });
-    } catch (e) {
-      set({ alertInvalidHost: true });
-    }
+    const results = await fetchFromHost(host);
+    set({ models: results.models, alertInvalidHost: !results.isSuccess });
   }
 
-  window.config.getAppVersion().then((res) => set({ version: res }));
-  updateHost("http://127.0.0.1:11434");
+  window.api.getAppVersion().then((res) => set({ version: res }));
+  updateHost(DEFAULT_HOST);
+  readLanguagesCsv().then((res) => set({ languages: res }));
   return {
     version: "",
-    languages: LANGUAGES,
-    host: "",
+    languages: [],
+    host: DEFAULT_HOST,
     alertInvalidHost: false,
     models: [],
 
