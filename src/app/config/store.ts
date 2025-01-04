@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import TranslationAgent from "../translation/agent";
-import LANGUAGES from "./languages";
+import { Language } from "../translation/models";
+import LANGUAGES from "./language";
 
 export interface ConfigStore {
   version: string;

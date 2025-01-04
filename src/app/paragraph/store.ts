@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { LangText, TranslationRequest } from "../translation/models";
+import {
+  LangText,
+  Language,
+  languageNull,
+  TranslationRequest,
+} from "../translation/models";
 import TranslationAgent from "../translation/agent";
 import useConfigStore from "../config/store";
 
@@ -12,8 +17,8 @@ export interface ParagraphStore {
   confidenceScore: number | null;
 
   setModel: (model: string | null) => void;
-  setSourceLang: (lang: string | null) => void;
-  setTargetLang: (lang: string | null) => void;
+  setSourceLang: (lang: Language | null) => void;
+  setTargetLang: (lang: Language | null) => void;
   setUseRefinement: (use: boolean) => void;
   setContext: (context: string) => void;
   removeExampleAt: (index: number) => void;
@@ -24,7 +29,12 @@ export interface ParagraphStore {
 }
 
 const useParagraphStore = create<ParagraphStore>()((set, get) => ({
-  request: { text: "", sourceLang: "", targetLang: "", examples: [] },
+  request: {
+    text: "",
+    sourceLang: languageNull,
+    targetLang: languageNull,
+    examples: [],
+  },
   model: "",
   availableModels: [],
   allLanguages: [],
@@ -35,9 +45,9 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
 
   setModel: (model) => set({ model: model ?? "" }),
   setSourceLang: (lang) =>
-    set({ request: { ...get().request, sourceLang: lang ?? "" } }),
+    set({ request: { ...get().request, sourceLang: lang ?? languageNull } }),
   setTargetLang: (lang) =>
-    set({ request: { ...get().request, targetLang: lang ?? "" } }),
+    set({ request: { ...get().request, targetLang: lang ?? languageNull } }),
   setUseRefinement: (useRefinement) => set({ useRefinement: useRefinement }),
   setContext: (context) =>
     set({ request: { ...get().request, context: context } }),

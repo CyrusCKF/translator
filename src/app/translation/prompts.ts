@@ -21,7 +21,9 @@ async function readPromptFile(filename: string) {
 export async function buildTranslatePrompt(request: TranslationRequest) {
   const template = await readPromptFile("translate.txt");
   const placeholders = <{ [key: string]: string }>{
-    ...request,
+    text: request.text,
+    sourceLang: request.sourceLang.name,
+    targetLang: request.targetLang.name,
     context: request.context ?? "",
     examples: buildExampleStrings(request.examples) ?? "",
   };
@@ -34,8 +36,8 @@ export async function buildEstimatePrompt(
 ) {
   const template = await readPromptFile("estimate.txt");
   const placeholders = <{ [key: string]: string }>{
-    sourceLang: request.sourceLang,
-    targetLang: request.targetLang,
+    sourceLang: request.sourceLang.name,
+    targetLang: request.targetLang.name,
     source: request.text,
     translation: translation,
   };
@@ -49,8 +51,8 @@ export async function buildRefinePrompt(
 ) {
   const template = await readPromptFile("refine.txt");
   const placeholders = <{ [key: string]: string }>{
-    sourceLang: request.sourceLang,
-    targetLang: request.targetLang,
+    sourceLang: request.sourceLang.name,
+    targetLang: request.targetLang.name,
     source: request.text,
     context: request.context ?? "",
     examples: buildExampleStrings(request.examples) ?? "",

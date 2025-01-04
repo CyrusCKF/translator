@@ -20,6 +20,7 @@ import {
 } from "@tabler/icons-react";
 import useParagraphStore from "./store";
 import useConfigStore from "../config/store";
+import { Language } from "../translation/models";
 
 export default function ParagraphConfig() {
   const models = useConfigStore((state) => state.models);
@@ -35,7 +36,7 @@ export default function ParagraphConfig() {
   const removeExampleAt = useParagraphStore((state) => state.removeExampleAt);
   const modifyExampleAt = useParagraphStore((state) => state.modifyExampleAt);
 
-  const languageOptions = languages.map((e) => `${e.endonym}`);
+  const languageOptions = languages.map((e) => e.endonym);
 
   return (
     <>
@@ -61,14 +62,22 @@ export default function ParagraphConfig() {
             data={languageOptions}
             w="7rem"
             searchable
-            onChange={setSourceLang}
+            onChange={(value) => {
+              const lang = languages.find((e) => e.endonym === value);
+              if (lang === undefined) setSourceLang(null);
+              else setSourceLang(lang);
+            }}
           ></Select>
           <Text>to</Text>
           <Select
             data={languageOptions}
             w="7rem"
             searchable
-            onChange={setTargetLang}
+            onChange={(value) => {
+              const lang = languages.find((e) => e.endonym === value);
+              if (lang === undefined) setTargetLang(null);
+              else setTargetLang(lang);
+            }}
           ></Select>
         </Group>
       </Group>
@@ -128,8 +137,8 @@ export default function ParagraphConfig() {
 
 interface ConfigExampleProps {
   description: string;
-  lang1: string;
-  lang2: string;
+  lang1: Language;
+  lang2: Language;
   onRemove: () => void;
   onText1Change: (text: string) => void;
   onText2Change: (text: string) => void;
@@ -143,8 +152,8 @@ function ConfigExample({
   onText1Change,
   onText2Change,
 }: ConfigExampleProps) {
-  const topSection = <Text size="xs">{lang1.slice(0, 2)}</Text>;
-  const bottomSection = <Text size="xs">{lang2.slice(0, 2)}</Text>;
+  const topSection = <Text size="xs">{lang1.code}</Text>;
+  const bottomSection = <Text size="xs">{lang2.code}</Text>;
 
   return (
     <Box>

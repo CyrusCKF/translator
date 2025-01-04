@@ -15,6 +15,7 @@ import {
 import classes from "./ParagraphTexts.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
 import useParagraphStore from "./store";
+import { languageNull } from "../translation/models";
 
 export default function ParagraphTexts() {
   const model = useParagraphStore((state) => state.model);
@@ -27,8 +28,8 @@ export default function ParagraphTexts() {
 
   const canTranslate: boolean =
     model !== "" &&
-    request.sourceLang !== "" &&
-    request.targetLang !== "" &&
+    request.sourceLang !== languageNull &&
+    request.targetLang !== languageNull &&
     request.text !== "";
 
   return (
