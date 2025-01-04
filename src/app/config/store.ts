@@ -9,12 +9,12 @@ export interface ConfigStore {
   alertInvalidHost: boolean;
   models: string[];
 
-  setHost: (text: string) => void;
+  updateHost: (text: string) => Promise<void>;
   closeInvalidAlert: () => void;
 }
 
 const useConfigStore = create<ConfigStore>()((set, get) => {
-  async function setHost(host: string) {
+  async function updateHost(host: string) {
     await Promise<void>; // so that set works after init
     set({ host: host });
     try {
@@ -26,7 +26,7 @@ const useConfigStore = create<ConfigStore>()((set, get) => {
   }
 
   window.config.getAppVersion().then((res) => set({ version: res }));
-  setHost("http://127.0.0.1:11434");
+  updateHost("http://127.0.0.1:11434");
   return {
     version: "",
     languages: LANGUAGES,
@@ -34,7 +34,7 @@ const useConfigStore = create<ConfigStore>()((set, get) => {
     alertInvalidHost: false,
     models: [],
 
-    setHost: setHost,
+    updateHost: updateHost,
     closeInvalidAlert: () => set({ alertInvalidHost: false }),
   };
 });
