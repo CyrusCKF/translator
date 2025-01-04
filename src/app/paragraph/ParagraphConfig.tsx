@@ -18,12 +18,12 @@ import {
   IconQuestionMark,
   IconTrashX,
 } from "@tabler/icons-react";
-import LANGUAGES from "../config/languages";
 import useParagraphStore from "./store";
 import useConfigStore from "../config/store";
 
 export default function ParagraphConfig() {
-  const availableModels = useParagraphStore((state) => state.availableModels);
+  const models = useConfigStore((state) => state.models);
+  const languages = useConfigStore((state) => state.languages);
   const request = useParagraphStore((state) => state.request);
   const useRefinement = useParagraphStore((state) => state.useRefinement);
   const setModel = useParagraphStore((state) => state.setModel);
@@ -35,24 +35,10 @@ export default function ParagraphConfig() {
   const removeExampleAt = useParagraphStore((state) => state.removeExampleAt);
   const modifyExampleAt = useParagraphStore((state) => state.modifyExampleAt);
 
-  const host = useConfigStore((state) => state.host);
-  const models = useConfigStore((state) => state.models);
+  const languageOptions = languages.map((e) => `${e.endonym}`);
 
   return (
     <>
-      <Group justify="space-between">
-        <Text>
-          Host
-          <Text c="red" span inherit>
-            *
-          </Text>
-        </Text>
-        <TextInput
-          value={host}
-          onChange={(event) => console.log(event.currentTarget.value)}
-        ></TextInput>
-      </Group>
-
       <Group justify="space-between">
         <Text>
           Model
@@ -72,14 +58,14 @@ export default function ParagraphConfig() {
         </Text>
         <Group>
           <Select
-            data={LANGUAGES}
+            data={languageOptions}
             w="7rem"
             searchable
             onChange={setSourceLang}
           ></Select>
           <Text>to</Text>
           <Select
-            data={LANGUAGES}
+            data={languageOptions}
             w="7rem"
             searchable
             onChange={setTargetLang}

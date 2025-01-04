@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import TranslationAgent from "../translation/agent";
+import LANGUAGES from "./languages";
 
 export interface ConfigStore {
   version: string;
@@ -8,6 +9,7 @@ export interface ConfigStore {
   alertInvalidHost: boolean;
   models: string[];
 
+  setHost: (text: string) => void;
   closeInvalidAlert: () => void;
 }
 
@@ -25,14 +27,14 @@ const useConfigStore = create<ConfigStore>()((set, get) => {
 
   window.config.getAppVersion().then((res) => set({ version: res }));
   setHost("http://127.0.0.1:11434");
-  set({ languages: [] });
   return {
     version: "",
-    languages: [],
-    host: "http://127",
+    languages: LANGUAGES,
+    host: "",
     alertInvalidHost: false,
     models: [],
 
+    setHost: setHost,
     closeInvalidAlert: () => set({ alertInvalidHost: false }),
   };
 });
