@@ -212,7 +212,8 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "msi",
+        "zip"
       ]
     },
     "linux": {

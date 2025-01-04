@@ -8,7 +8,7 @@ Deliver context-aware translation results using Large Language Models (LLM), all
 
 ## 🏬 Installation
 
-1. Download the [latest release](https://github.com/CyrusCKF/translator/releases) and extract the files
+1. Download the [latest release](https://github.com/CyrusCKF/translator/releases) and install
 2. Ensure that [Ollama](https://ollama.com/) is running
 3. Run the `.exe` file
 
