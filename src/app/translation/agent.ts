@@ -1,4 +1,4 @@
-import ollama, { GenerateResponse } from "ollama/browser";
+import { GenerateResponse, Ollama } from "ollama/browser";
 import { LangText, TranslationRequest } from "./models";
 import {
   buildEstimatePrompt,
@@ -7,26 +7,28 @@ import {
 } from "./prompts";
 
 export default class TranslationAgent {
-  model;
-  constructor(model: string) {
+  model: string;
+  host: string;
+  constructor(model: string, host: string) {
     this.model = model;
+    this.host = host;
   }
 
-  static async getAllModels() {
-    return await ollama
+  static async getAllModels(host: string) {
+    return await new Ollama({ host: host })
       .list()
       .then((response) => response.models.map((e) => e.name));
   }
 
   async generate(prompt: string): Promise<GenerateResponse> {
-    return await ollama.generate({
+    return await new Ollama({ host: this.host }).generate({
       model: this.model,
       prompt: prompt,
     });
   }
 
   async generateStream(prompt: string) {
-    return await ollama.generate({
+    return await new Ollama({ host: this.host }).generate({
       model: this.model,
       prompt: prompt,
       stream: true,
@@ -74,7 +76,7 @@ export default class TranslationAgent {
     const backResponse = this.translate(backRequest, false);
     let text3 = "";
     for await (const res of backResponse) text3 += res;
-    const embedResponse = await ollama.embed({
+    const embedResponse = await new Ollama({ host: this.host }).embed({
       model: this.model,
       input: [langText1.text, text3],
     });

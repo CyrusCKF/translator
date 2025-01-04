@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { LangText, TranslationRequest } from "../translation/models";
 import TranslationAgent from "../translation/agent";
 import LANGUAGES from "../config/languages";
+import useConfigStore from "../config/store";
 
 export interface ParagraphStore {
   request: TranslationRequest;
@@ -67,12 +68,14 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
   setOriginalText: (text) => set({ request: { ...get().request, text: text } }),
 
   initializeParams: async () => {
-    const models = await TranslationAgent.getAllModels();
+    const host = useConfigStore.getState().host;
+    const models = await TranslationAgent.getAllModels(host);
     set({ availableModels: models, allLanguages: LANGUAGES });
   },
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
-    const agent = new TranslationAgent(get().model);
+    const host = useConfigStore.getState().host;
+    const agent = new TranslationAgent(get().model, host);
     const request = get().request;
     const translateResponse = agent.translate(request, get().useRefinement);
     let translation = "";

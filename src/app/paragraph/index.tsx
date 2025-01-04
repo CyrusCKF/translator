@@ -10,17 +10,8 @@ import useConfigStore from "../config/store";
 
 export default function Paragraph() {
   const version = useConfigStore((state) => state.version);
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    async function initOllama() {
-      try {
-        await useParagraphStore.getState().initializeParams();
-      } catch (e) {
-        setIsOpen(true);
-      }
-    }
-    initOllama();
-  }, []);
+  const alertInvalidHost = useConfigStore((state) => state.alertInvalidHost);
+  const closeInvalidAlert = useConfigStore((state) => state.closeInvalidAlert);
 
   return (
     <>
@@ -49,8 +40,8 @@ export default function Paragraph() {
         </Grid>
       </Stack>
       <Modal
-        opened={isOpen}
-        onClose={() => setIsOpen(false)}
+        opened={alertInvalidHost}
+        onClose={closeInvalidAlert}
         centered
         title="Error"
       >

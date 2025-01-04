@@ -20,6 +20,7 @@ import {
 } from "@tabler/icons-react";
 import LANGUAGES from "../config/languages";
 import useParagraphStore from "./store";
+import useConfigStore from "../config/store";
 
 export default function ParagraphConfig() {
   const availableModels = useParagraphStore((state) => state.availableModels);
@@ -34,8 +35,24 @@ export default function ParagraphConfig() {
   const removeExampleAt = useParagraphStore((state) => state.removeExampleAt);
   const modifyExampleAt = useParagraphStore((state) => state.modifyExampleAt);
 
+  const host = useConfigStore((state) => state.host);
+  const models = useConfigStore((state) => state.models);
+
   return (
     <>
+      <Group justify="space-between">
+        <Text>
+          Host
+          <Text c="red" span inherit>
+            *
+          </Text>
+        </Text>
+        <TextInput
+          value={host}
+          onChange={(event) => console.log(event.currentTarget.value)}
+        ></TextInput>
+      </Group>
+
       <Group justify="space-between">
         <Text>
           Model
@@ -43,7 +60,7 @@ export default function ParagraphConfig() {
             *
           </Text>
         </Text>
-        <Select data={availableModels} onChange={setModel}></Select>
+        <Select data={models} onChange={setModel}></Select>
       </Group>
 
       <Group justify="space-between">
