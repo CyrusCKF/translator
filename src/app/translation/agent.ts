@@ -24,6 +24,7 @@ export default class TranslationAgent {
     return await new Ollama({ host: this.host }).generate({
       model: this.model,
       prompt: prompt,
+      options: { seed: 42 },
     });
   }
 
@@ -32,7 +33,19 @@ export default class TranslationAgent {
       model: this.model,
       prompt: prompt,
       stream: true,
+      options: { seed: 42 },
     });
+  }
+
+  async embed(...inputs: string[]) {
+    const response = inputs.map((e) =>
+      new Ollama({ host: this.host }).embed({
+        model: this.model,
+        input: e,
+        options: { seed: 42, temperature: 0 },
+      }),
+    );
+    return Promise.all(response);
   }
 
   async *translate(
@@ -76,12 +89,9 @@ export default class TranslationAgent {
     const backResponse = this.translate(backRequest, false);
     let text3 = "";
     for await (const res of backResponse) text3 += res;
-    const embedResponse = await new Ollama({ host: this.host }).embed({
-      model: this.model,
-      input: [langText1.text, text3],
-    });
+    const embedResponses = await this.embed(langText1.text, text3);
 
-    const [embed1, embed2] = embedResponse.embeddings;
+    const [embed1, embed2] = embedResponses.map((e) => e.embeddings[0]);
     const sum = (accum: number, cur: number) => accum + cur;
     const dotProduct = embed1.map((e, i) => e * embed2[i]).reduce(sum, 0);
     const magnitude1 = embed1.map((e) => e * e).reduce(sum, 0);
