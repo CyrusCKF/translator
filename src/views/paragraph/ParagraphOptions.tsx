@@ -20,7 +20,7 @@ import {
 } from "@tabler/icons-react";
 import useParagraphStore from "../../stores/paragraph";
 import useSettingsStore from "../../stores/settings";
-import { Language } from "../../repos/translation/models";
+import Language from "../../models/language";
 
 export default function ParagraphOptions() {
   const models = useSettingsStore((state) => state.models);

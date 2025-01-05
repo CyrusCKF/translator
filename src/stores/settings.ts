@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { Language } from "../repos/translation/models";
-import { DEFAULT_HOST, fetchFromHost, readLanguagesCsv } from "../repos/settings/settings";
+import Language from "../models/language";
+import { getAppVersion, readLanguagesCsv } from "../repos/settings/settings";
+import TranslationAgent, { DEFAULT_HOST } from "../repos/translation/agent";
 
 export interface SettingsStore {
   version: string;
@@ -15,15 +16,14 @@ export interface SettingsStore {
 
 const useSettingsStore = create<SettingsStore>()((set, get) => {
   async function updateHost(host: string) {
-    await Promise<void>; // so that set works after init
     set({ host: host });
-    const results = await fetchFromHost(host);
+    const results = await TranslationAgent.tryListModels(host);
     set({ models: results.models, alertInvalidHost: !results.isSuccess });
   }
 
-  window.api.getAppVersion().then((res) => set({ version: res }));
-  updateHost(DEFAULT_HOST);
+  getAppVersion().then((res) => set({ version: res }));
   readLanguagesCsv().then((res) => set({ languages: res }));
+  setTimeout(() => updateHost(DEFAULT_HOST), 0); // so that set works after init
   return {
     version: "",
     languages: [],

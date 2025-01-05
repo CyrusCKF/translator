@@ -1,10 +1,6 @@
 import { create } from "zustand";
-import {
-  LangText,
-  Language,
-  languageNull,
-  TranslationRequest,
-} from "../repos/translation/models";
+import { LangText, TranslationRequest } from "../repos/translation/models";
+import Language, { languageNull } from "../models/language";
 import TranslationAgent from "../repos/translation/agent";
 import useSettingsStore from "./settings";
 
@@ -25,7 +21,6 @@ export interface ParagraphStore {
   addExample: () => void;
   modifyExampleAt: (index: number, new1?: string, new2?: string) => void;
   setOriginalText: (text: string) => void;
-  startTranslation: () => Promise<void>;
 }
 
 const useParagraphStore = create<ParagraphStore>()((set, get) => ({
@@ -71,30 +66,6 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
       return { request: { ...state.request, examples: examples } };
     }),
   setOriginalText: (text) => set({ request: { ...get().request, text: text } }),
-  startTranslation: async () => {
-    set({ translatedText: "", isTranslating: true, confidenceScore: null });
-    const host = useSettingsStore.getState().host;
-    const agent = new TranslationAgent(get().model, host);
-    const request = get().request;
-    const translateResponse = agent.translate(request, get().useRefinement);
-    let translation = "";
-    for await (const res of translateResponse) {
-      translation += res;
-      set({ translatedText: translation });
-    }
-    set({ isTranslating: false });
-
-    const langText1: LangText = {
-      text: request.text,
-      lang: request.sourceLang,
-    };
-    const langText2: LangText = {
-      text: translation,
-      lang: request.targetLang,
-    };
-    const similarity = await agent.similarity(langText1, langText2);
-    set({ confidenceScore: similarity });
-  },
 }));
 
 export default useParagraphStore;

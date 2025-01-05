@@ -6,6 +6,8 @@ import {
   buildTranslatePrompt,
 } from "./prompts";
 
+export const DEFAULT_HOST = "http://127.0.0.1:11434";
+
 export default class TranslationAgent {
   model: string;
   host: string;
@@ -14,10 +16,19 @@ export default class TranslationAgent {
     this.host = host;
   }
 
-  static async getAllModels(host: string) {
-    return await new Ollama({ host: host })
-      .list()
-      .then((response) => response.models.map((e) => e.name));
+  static async tryListModels(host: string) {
+    const results: { isSuccess: boolean; models: string[] } = {
+      isSuccess: false,
+      models: [],
+    };
+    try {
+      const models = await new Ollama({ host: host })
+        .list()
+        .then((response) => response.models.map((e) => e.name));
+      results.isSuccess = true;
+      results.models = models;
+    } catch (e) {}
+    return results;
   }
 
   async generate(prompt: string): Promise<GenerateResponse> {
