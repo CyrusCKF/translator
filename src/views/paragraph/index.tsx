@@ -13,12 +13,12 @@ import {
 
 import classes from "./index.module.css";
 import ParagraphTexts from "./ParagraphTexts";
-import ParagraphConfig from "./ParagraphConfig";
-import useConfigStore from "../config/store";
+import ParagraphOptions from "./ParagraphOptions";
+import useSettingsStore from "../../stores/settings";
 import { useState } from "react";
 
 export default function Paragraph() {
-  const version = useConfigStore((state) => state.version);
+  const version = useSettingsStore((state) => state.version);
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function Paragraph() {
         <Grid align="stretch">
           <Grid.Col span={4}>
             <Stack>
-              <ParagraphConfig></ParagraphConfig>
+              <ParagraphOptions></ParagraphOptions>
             </Stack>
           </Grid.Col>
           <Grid.Col span={1}>
@@ -51,10 +51,10 @@ export default function Paragraph() {
 }
 
 function ConnectionErrorModal() {
-  const configHost = useConfigStore((state) => state.host);
-  const updateHost = useConfigStore((state) => state.updateHost);
-  const alertInvalidHost = useConfigStore((state) => state.alertInvalidHost);
-  const closeInvalidAlert = useConfigStore((state) => state.closeInvalidAlert);
+  const configHost = useSettingsStore((state) => state.host);
+  const updateHost = useSettingsStore((state) => state.updateHost);
+  const alertInvalidHost = useSettingsStore((state) => state.alertInvalidHost);
+  const closeInvalidAlert = useSettingsStore((state) => state.closeInvalidAlert);
 
   const [host, setHost] = useState(configHost);
   const [isUpdating, setIsUpdating] = useState(false);

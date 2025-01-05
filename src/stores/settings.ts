@@ -1,9 +1,8 @@
 import { create } from "zustand";
-import TranslationAgent from "../translation/agent";
-import { Language } from "../translation/models";
-import { DEFAULT_HOST, fetchFromHost, readLanguagesCsv } from "./util";
+import { Language } from "../repos/translation/models";
+import { DEFAULT_HOST, fetchFromHost, readLanguagesCsv } from "../repos/settings/settings";
 
-export interface ConfigStore {
+export interface SettingsStore {
   version: string;
   languages: Language[];
   host: string;
@@ -14,7 +13,7 @@ export interface ConfigStore {
   closeInvalidAlert: () => void;
 }
 
-const useConfigStore = create<ConfigStore>()((set, get) => {
+const useSettingsStore = create<SettingsStore>()((set, get) => {
   async function updateHost(host: string) {
     await Promise<void>; // so that set works after init
     set({ host: host });
@@ -37,4 +36,4 @@ const useConfigStore = create<ConfigStore>()((set, get) => {
   };
 });
 
-export default useConfigStore;
+export default useSettingsStore;

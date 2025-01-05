@@ -12,19 +12,19 @@ import {
   HoverCard,
 } from "@mantine/core";
 
-import classes from "./ParagraphConfig.module.css";
+import classes from "./ParagraphOptions.module.css";
 import {
   IconLayoutGridAdd,
   IconQuestionMark,
   IconTrashX,
 } from "@tabler/icons-react";
-import useParagraphStore from "./store";
-import useConfigStore from "../config/store";
-import { Language } from "../translation/models";
+import useParagraphStore from "../../stores/paragraph";
+import useSettingsStore from "../../stores/settings";
+import { Language } from "../../repos/translation/models";
 
-export default function ParagraphConfig() {
-  const models = useConfigStore((state) => state.models);
-  const languages = useConfigStore((state) => state.languages);
+export default function ParagraphOptions() {
+  const models = useSettingsStore((state) => state.models);
+  const languages = useSettingsStore((state) => state.languages);
   const request = useParagraphStore((state) => state.request);
   const useRefinement = useParagraphStore((state) => state.useRefinement);
   const setModel = useParagraphStore((state) => state.setModel);
@@ -117,7 +117,7 @@ export default function ParagraphConfig() {
       <Stack>
         <Text>Examples</Text>
         {request.examples.map((_, i) => (
-          <ConfigExample
+          <OptionsExample
             key={`${i}`}
             description={`Pair ${i + 1}`}
             lang1={request.sourceLang}
@@ -125,7 +125,7 @@ export default function ParagraphConfig() {
             onText1Change={(text) => modifyExampleAt(i, text, undefined)}
             onText2Change={(text) => modifyExampleAt(i, undefined, text)}
             onRemove={() => removeExampleAt(i)}
-          ></ConfigExample>
+          ></OptionsExample>
         ))}
         <ActionIcon variant="subtle" size="sm" w="100%" onClick={addExample}>
           <IconLayoutGridAdd></IconLayoutGridAdd>
@@ -135,7 +135,7 @@ export default function ParagraphConfig() {
   );
 }
 
-interface ConfigExampleProps {
+interface OptionsExampleProps {
   description: string;
   lang1: Language;
   lang2: Language;
@@ -144,14 +144,14 @@ interface ConfigExampleProps {
   onText2Change: (text: string) => void;
 }
 
-function ConfigExample({
+function OptionsExample({
   description,
   lang1,
   lang2,
   onRemove,
   onText1Change,
   onText2Change,
-}: ConfigExampleProps) {
+}: OptionsExampleProps) {
   const topSection = <Text size="xs">{lang1.code}</Text>;
   const bottomSection = <Text size="xs">{lang2.code}</Text>;
 

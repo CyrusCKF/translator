@@ -19,8 +19,8 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import Help from "./help/Help";
-import Paragraph from "./paragraph";
+import Paragraph from "../paragraph";
+import Help from "../help";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",

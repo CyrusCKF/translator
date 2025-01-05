@@ -4,9 +4,9 @@ import {
   Language,
   languageNull,
   TranslationRequest,
-} from "../translation/models";
-import TranslationAgent from "../translation/agent";
-import useConfigStore from "../config/store";
+} from "../repos/translation/models";
+import TranslationAgent from "../repos/translation/agent";
+import useSettingsStore from "./settings";
 
 export interface ParagraphStore {
   request: TranslationRequest;
@@ -73,7 +73,7 @@ const useParagraphStore = create<ParagraphStore>()((set, get) => ({
   setOriginalText: (text) => set({ request: { ...get().request, text: text } }),
   startTranslation: async () => {
     set({ translatedText: "", isTranslating: true, confidenceScore: null });
-    const host = useConfigStore.getState().host;
+    const host = useSettingsStore.getState().host;
     const agent = new TranslationAgent(get().model, host);
     const request = get().request;
     const translateResponse = agent.translate(request, get().useRefinement);

@@ -14,8 +14,8 @@ import {
 
 import classes from "./ParagraphTexts.module.css";
 import { IconClipboard, IconCopy, IconPlaylistX } from "@tabler/icons-react";
-import useParagraphStore from "./store";
-import { languageNull } from "../translation/models";
+import useParagraphStore from "../../stores/paragraph";
+import { languageNull } from "../../repos/translation/models";
 
 export default function ParagraphTexts() {
   const model = useParagraphStore((state) => state.model);
