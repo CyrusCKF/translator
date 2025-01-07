@@ -9,7 +9,11 @@ import {
   Space,
   Stack,
 } from "@mantine/core";
-import { IconHelp, IconLanguageHiragana } from "@tabler/icons-react";
+import {
+  IconClipboardText,
+  IconHelp,
+  IconLanguageHiragana,
+} from "@tabler/icons-react";
 
 import classes from "./index.module.css";
 import {
@@ -21,6 +25,7 @@ import {
 } from "react-router-dom";
 import Paragraph from "../paragraph";
 import Help from "../help";
+import ProjectSelect from "../project.select";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
@@ -43,6 +48,9 @@ export default function App() {
               <NavIcon to="/" tooltip="Translation">
                 <IconLanguageHiragana className={classes["nav-icon"]} />
               </NavIcon>
+              <NavIcon to="/paragraph" tooltip="Paragraph">
+                <IconClipboardText className={classes["nav-icon"]} />
+              </NavIcon>
               <NavIcon to="/help" tooltip="Help">
                 <IconHelp className={classes["nav-icon"]} />
               </NavIcon>
@@ -50,7 +58,8 @@ export default function App() {
           </AppShell.Navbar>
           <AppShell.Main>
             <Routes>
-              <Route path="/" element={<Paragraph />}></Route>
+              <Route path="/" element={<ProjectSelect />}></Route>
+              <Route path="/paragraph" element={<Paragraph />}></Route>
               <Route path="/help" element={<Help />}></Route>
               <Route path="*" element={<NotFoundPage />}></Route>
             </Routes>

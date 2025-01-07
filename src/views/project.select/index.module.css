@@ -1,0 +1,28 @@
+.create-zone {
+  width: 300px;
+  height: 300px;
+}
+
+.big-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.dropzone {
+  background-color: var(--mantine-color-dark-6);
+  border: 2px dashed var(--mantine-color-dark-3);
+  border-radius: 4px;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  cursor: pointer;
+
+  &[data-accept] {
+    border-color: var(--mantine-color-green-3);
+    color: var(--mantine-color-green-5);
+  }
+}
+
+.dropzone:hover {
+  background-color: var(--mantine-color-dark-5);
+}

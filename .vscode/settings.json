@@ -26,5 +26,15 @@
     "test/**/__snapshots__": true,
     "package-lock.json": true,
     "*.{css,sass,scss}.d.ts": true
+  },
+  "files.exclude": {
+    ".editorconfig": true,
+    ".eslintignore": true,
+    ".eslintrc.js": true,
+    "eslint.config.mjs": true,
+    "forge.config.js": true,
+    "LICENSE": true,
+    "postcss.config.cjs": true,
+    "tsconfig.json": true
   }
 }
