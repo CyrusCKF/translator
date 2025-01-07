@@ -4,7 +4,7 @@ export default interface Project {
   sourceLang: string;
   languages: string[];
   filePath?: string;
-  lastModiified?: Date;
+  lastModified?: Date;
   context?: string;
   sections: Section[];
 }

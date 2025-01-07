@@ -1,8 +1,6 @@
 import { create } from "zustand";
-import { LangText, TranslationRequest } from "../repos/translation/models";
+import { TranslationRequest } from "../repos/translation/models";
 import Language, { languageNull } from "../models/language";
-import TranslationAgent from "../repos/translation/agent";
-import useSettingsStore from "./settings";
 
 export interface ParagraphStore {
   request: TranslationRequest;

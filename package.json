@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@electron/notarize": "^2.3.2",
+    "@iarna/toml": "^2.2.5",
     "@mantine/core": "^7.15.2",
     "@mantine/dropzone": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
