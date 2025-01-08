@@ -25,7 +25,7 @@ import {
 } from "react-router-dom";
 import Paragraph from "../paragraph";
 import Help from "../help";
-import ProjectSelect from "../project.select";
+import ProjectManager from "../project.manager";
 
 const theme = createTheme({
   fontFamily: "Montserrat, sans-serif",
@@ -58,7 +58,7 @@ export default function App() {
           </AppShell.Navbar>
           <AppShell.Main>
             <Routes>
-              <Route path="/" element={<ProjectSelect />}></Route>
+              <Route path="/" element={<ProjectManager />}></Route>
               <Route path="/paragraph" element={<Paragraph />}></Route>
               <Route path="/help" element={<Help />}></Route>
               <Route path="*" element={<NotFoundPage />}></Route>
